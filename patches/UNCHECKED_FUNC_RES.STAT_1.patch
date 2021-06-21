@@ -1,0 +1,20 @@
+commit ba551181eea2fec9f978823fe17a9f92db8dce84
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon May 10 23:44:07 2021 +0300
+
+    patch48
+
+diff --git a/xlators/cluster/afr/src/afr-self-heal-metadata.c b/xlators/cluster/afr/src/afr-self-heal-metadata.c
+index f23cf8e..d6f1591 100644
+--- a/xlators/cluster/afr/src/afr-self-heal-metadata.c
++++ b/xlators/cluster/afr/src/afr-self-heal-metadata.c
+@@ -77,6 +77,9 @@ __afr_selfheal_metadata_do (call_frame_t *frame, xlator_t *this, inode_t *inode,
+ 
+ 		ret = syncop_getxattr (priv->children[i], &loc, &old_xattr, 0,
+                                        NULL, NULL);
++                if (ret) {
++                        healed_sinks[i] = 0;
++                }                
+ 		if (old_xattr) {
+ 			afr_delete_ignorable_xattrs (old_xattr);
+ 			ret = syncop_removexattr (priv->children[i], &loc, "",

@@ -1,0 +1,21 @@
+commit 347aad8c7077a3abd823d39932675d2164ff5e76
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon Apr 26 14:29:32 2021 +0300
+
+    patch32
+
+diff --git a/xlators/encryption/crypt/src/crypt.c b/xlators/encryption/crypt/src/crypt.c
+index 8b2216b..32bb336 100644
+--- a/xlators/encryption/crypt/src/crypt.c
++++ b/xlators/encryption/crypt/src/crypt.c
+@@ -4137,8 +4137,9 @@ static int32_t crypt_readdirp(call_frame_t *frame, xlator_t *this,
+ 	 * make sure that we'll have real file sizes at ->readdirp_cbk()
+ 	 */
+ 	ret = dict_set(xdata, FSIZE_XATTR_PREFIX, data_from_uint64(0));
+-	if (ret) {
++	if (ret < 0) {
+ 		dict_unref(xdata);
++		ret = EINVAL;
+ 		goto error;
+ 	}
+ 	STACK_WIND(frame,

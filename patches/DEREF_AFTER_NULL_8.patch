@@ -1,0 +1,19 @@
+commit 91a11d0272a2edafb036a96562689964decd0e51
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed Apr 14 17:31:18 2021 +0300
+
+    patch9
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-op-sm.c b/xlators/mgmt/glusterd/src/glusterd-op-sm.c
+index 7bb3d53..25ad51e 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-op-sm.c
++++ b/xlators/mgmt/glusterd/src/glusterd-op-sm.c
+@@ -7731,7 +7731,7 @@ out:
+         if (ev_ctx && ev_ctx->rsp_dict)
+                 dict_unref (ev_ctx->rsp_dict);
+         GF_FREE (ev_ctx);
+-        gf_msg_debug (this->name, 0, "Returning %d", ret);
++        gf_msg_debug (this ? this->name : "glusterd-op-sm", 0, "Returning %d", ret);
+ 
+         return ret;
+ }

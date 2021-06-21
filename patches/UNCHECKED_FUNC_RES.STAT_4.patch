@@ -1,0 +1,40 @@
+commit 6c117d8d89b7fe3aecb2bfbf7da1a181f8505fc4
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue May 11 16:22:45 2021 +0300
+
+    patch51
+
+diff --git a/cli/src/cli-rpc-ops.c b/cli/src/cli-rpc-ops.c
+index e3b9715..96f292e 100644
+--- a/cli/src/cli-rpc-ops.c
++++ b/cli/src/cli-rpc-ops.c
+@@ -2314,6 +2314,10 @@ gf_cli_set_volume_cbk (struct rpc_req *req, struct iovec *iov,
+         }
+ 
+         ret = dict_unserialize (rsp.dict.dict_val, rsp.dict.dict_len, &dict);
++        if (ret) {
++                gf_log("cli", GF_LOG_ERROR, "Failed to unserialize the dictionary");
++                goto out;
++        }
+ 
+         /* For brick processes graph change does not happen on the fly.
+          * The process has to be restarted. So this is a check from the
+diff --git a/xlators/mgmt/glusterd/src/glusterd-handler.c b/xlators/mgmt/glusterd/src/glusterd-handler.c
+index 185186a..66ec384 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-handler.c
++++ b/xlators/mgmt/glusterd/src/glusterd-handler.c
+@@ -2997,8 +2997,13 @@ __glusterd_handle_cli_profile_volume (rpcsvc_request_t *req)
+                 dict = dict_new();
+                 if (!dict)
+                         goto out;
+-                dict_unserialize (cli_req.dict.dict_val,
++                ret = dict_unserialize (cli_req.dict.dict_val,
+                                   cli_req.dict.dict_len, &dict);
++                if (ret) {
++                        gf_log ("cli", GF_LOG_ERROR,
++                                "Failed to unserialize the dictionary");
++                        goto out;
++                }
+         }
+ 
+         ret = dict_get_str (dict, "volname", &volname);

@@ -1,0 +1,29 @@
+commit 7b22f1eb8aeac58454e810d2339118a76e1cd02f
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Fri May 28 23:46:16 2021 +0300
+
+    patch119
+
+diff --git a/xlators/cluster/dht/src/dht-common.c b/xlators/cluster/dht/src/dht-common.c
+index 457fbc9..04481d9 100644
+--- a/xlators/cluster/dht/src/dht-common.c
++++ b/xlators/cluster/dht/src/dht-common.c
+@@ -5327,6 +5327,9 @@ dht_readdir_cbk (call_frame_t *frame, void *cookie, xlator_t *this,
+ 
+         prev = cookie;
+         local = frame->local;
++        if (!local) {
++                return 0; 
++        }
+ 
+         conf = this->private;
+         GF_VALIDATE_OR_GOTO (this->name, conf, done);
+@@ -5375,7 +5378,7 @@ dht_readdir_cbk (call_frame_t *frame, void *cookie, xlator_t *this,
+         }
+ 
+ done:
+-        if ((count == 0) || (local && (local->filled < local->size))) {
++        if ((count == 0) || (local->filled < local->size)) {
+                 if ((op_ret <= 0) || (op_errno == ENOENT)) {
+                         next_subvol = dht_subvol_next (this, prev);
+                 } else {

@@ -1,0 +1,20 @@
+commit 43cd6e738847ef9541cb4e5a3cc100d046ef4a98
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue May 11 21:39:22 2021 +0300
+
+    patch55
+
+diff --git a/xlators/cluster/dht/src/dht-common.c b/xlators/cluster/dht/src/dht-common.c
+index 09db9f0..f521b9c 100644
+--- a/xlators/cluster/dht/src/dht-common.c
++++ b/xlators/cluster/dht/src/dht-common.c
+@@ -4377,6 +4377,9 @@ dht_setxattr (call_frame_t *frame, xlator_t *this,
+                 local->call_cnt = 1;
+ 
+                 ret = dict_set_int8 (local->xattr_req, DHT_IATT_IN_XDATA_KEY, 1);
++                if (ret < 0) {
++                        goto err;
++                }
+ 
+                 STACK_WIND_COOKIE (frame, dht_file_setxattr_cbk, subvol,
+                                    subvol, subvol->fops->setxattr, loc, xattr,

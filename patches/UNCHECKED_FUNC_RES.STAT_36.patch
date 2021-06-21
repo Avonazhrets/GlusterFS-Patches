@@ -1,0 +1,60 @@
+commit ba3101c2114349e2e2114f2733724c78aabed564
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sun May 30 14:30:37 2021 +0300
+
+    patch129
+
+diff --git a/heal/src/glfs-heal.c b/heal/src/glfs-heal.c
+index d001395..83c510b 100644
+--- a/heal/src/glfs-heal.c
++++ b/heal/src/glfs-heal.c
+@@ -226,36 +226,43 @@ xml_out:
+ int
+ glfsh_print_xml_heal_op_status (int ret, uint64_t num_entries, char *fmt_str)
+ {
++        int x_ret = 0;
+         if (ret < 0 && num_entries == 0) {
+-                xmlTextWriterWriteFormatElement (glfsh_writer,
++                x_ret = xmlTextWriterWriteFormatElement (glfsh_writer,
+                                 (xmlChar *)"status",
+                                 "%s", strerror (-ret));
++                XML_RET_CHECK_AND_GOTO(x_ret, out);
+                 if (fmt_str) {
+-                        xmlTextWriterWriteFormatElement (glfsh_writer,
++                        x_ret = xmlTextWriterWriteFormatElement (glfsh_writer,
+                                         (xmlChar *)"numberOfEntries",
+                                         "-");
++                        XML_RET_CHECK_AND_GOTO(x_ret, out);
+                 }
+                 goto out;
+         } else if (ret == 0) {
+-                xmlTextWriterWriteFormatElement (glfsh_writer,
++                x_ret = xmlTextWriterWriteFormatElement (glfsh_writer,
+                                                  (xmlChar *)"status",
+                                                  "%s", "Connected");
++                XML_RET_CHECK_AND_GOTO(x_ret, out);
+         }
+ 
+         if (ret < 0) {
+                 if (fmt_str) {
+-                        xmlTextWriterWriteFormatElement (glfsh_writer,
++                        x_ret = xmlTextWriterWriteFormatElement (glfsh_writer,
+                                         (xmlChar *)"status",
+                                         "Failed to process entries completely. "
+                                         "(%s)%s %"PRIu64"", strerror (-ret),
+                                         fmt_str,
+                                         num_entries);
++                        XML_RET_CHECK_AND_GOTO(x_ret, out);
+                 }
+         } else {
+-                if (fmt_str)
+-                        xmlTextWriterWriteFormatElement (glfsh_writer,
++                if (fmt_str) {
++                        x_ret = xmlTextWriterWriteFormatElement (glfsh_writer,
+                                         (xmlChar *)"numberOfEntries",
+                                         "%"PRIu64"", num_entries);
++                        XML_RET_CHECK_AND_GOTO(x_ret, out);
++                }
+         }
+ out:
+         ret = xmlTextWriterEndElement (glfsh_writer);

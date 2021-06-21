@@ -1,0 +1,39 @@
+commit 3591d19a83b7ff9609224203e630d1ce41437a64
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue Apr 27 22:04:03 2021 +0300
+
+    patch41
+
+diff --git a/xlators/features/bit-rot/src/bitd/bit-rot-scrub-status.c b/xlators/features/bit-rot/src/bitd/bit-rot-scrub-status.c
+index 0afd7ea..71c0bb7 100644
+--- a/xlators/features/bit-rot/src/bitd/bit-rot-scrub-status.c
++++ b/xlators/features/bit-rot/src/bitd/bit-rot-scrub-status.c
+@@ -9,6 +9,7 @@
+ */
+ 
+ #include <string.h>
++#include <stdio.h>
+ 
+ #include "bit-rot-scrub-status.h"
+ 
+@@ -58,6 +59,10 @@ br_update_scrub_finish_time (br_scrub_stats_t *scrub_stat, char *timestr,
+         if (!scrub_stat)
+                 return;
+ 
++        int lst_size = sizeof(scrub_stat->last_scrub_time);
++        if (strlen(timestr) >= lst_size)
++                return;
++
+         pthread_mutex_lock (&scrub_stat->lock);
+         {
+                 scrub_stat->scrub_end_tv.tv_sec = tv->tv_sec;
+@@ -66,8 +71,7 @@ br_update_scrub_finish_time (br_scrub_stats_t *scrub_stat, char *timestr,
+                                  scrub_stat->scrub_end_tv.tv_sec -
+                                  scrub_stat->scrub_start_tv.tv_sec;
+ 
+-                strncpy (scrub_stat->last_scrub_time, timestr,
+-                         sizeof (scrub_stat->last_scrub_time));
++                snprintf(scrub_stat->last_scrub_time, lst_size, "%s", timestr);
+         }
+         pthread_mutex_unlock (&scrub_stat->lock);
+ }

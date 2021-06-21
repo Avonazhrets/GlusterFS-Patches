@@ -1,0 +1,21 @@
+commit 1c958c61506250947c529f7879e96230c8ed0845
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon May 10 22:08:43 2021 +0300
+
+    patch47
+
+diff --git a/xlators/features/changelog/lib/src/gf-changelog-journal-handler.c b/xlators/features/changelog/lib/src/gf-changelog-journal-handler.c
+index 3aaee5e..23f68cf 100644
+--- a/xlators/features/changelog/lib/src/gf-changelog-journal-handler.c
++++ b/xlators/features/changelog/lib/src/gf-changelog-journal-handler.c
+@@ -354,6 +354,10 @@ gf_changelog_parse_ascii (xlator_t *this,
+                         VERIFY_SEPARATOR (mover, len, parse_err);
+ 
+                         fop = atoi (mover);
++                        if (fop == 0) {
++                                parse_err = 1;
++                                break;
++                        }
+                         fopname = gf_fop_list[fop];
+                         if (fopname == NULL) {
+                                 parse_err = 1;

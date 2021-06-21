@@ -1,0 +1,19 @@
+commit 2fd5ef09fd8c237cd369ceae66237cea52b5bd66
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 29 22:38:12 2021 +0300
+
+    patch126
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-snapshot.c b/xlators/mgmt/glusterd/src/glusterd-snapshot.c
+index fa93a8b..635e9fa 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-snapshot.c
++++ b/xlators/mgmt/glusterd/src/glusterd-snapshot.c
+@@ -5006,7 +5006,7 @@ glusterd_add_brick_to_snap_volume (dict_t *dict, dict_t *rsp_dict,
+                         goto out;
+                 }
+         }
+-        strncpy (snap_brickinfo->real_path, abspath, strlen(abspath));
++        strncpy (snap_brickinfo->real_path, abspath, strlen(abspath) + 1);
+ 
+         strcpy (snap_brickinfo->mount_dir, original_brickinfo->mount_dir);
+         gf_uuid_copy (snap_brickinfo->uuid, original_brickinfo->uuid);

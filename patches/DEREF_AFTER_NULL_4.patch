@@ -1,0 +1,22 @@
+commit 6e22c8b0f364a0f129a05418db8a7fed98854fcf
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed Apr 14 16:49:35 2021 +0300
+
+    patch5
+
+diff --git a/glusterfsd/src/gf_attach.c b/glusterfsd/src/gf_attach.c
+index 05119e4..782bbf0 100644
+--- a/glusterfsd/src/gf_attach.c
++++ b/glusterfsd/src/gf_attach.c
+@@ -144,7 +144,10 @@ out:
+ 
+         iobref_unref (iobref);
+         iobuf_unref (iobuf);
+-        STACK_DESTROY (frame->root);
++        if (frame) {
++                STACK_DESTROY (frame->root);
++        }
++;
+ 
+         if (rpc_status != 0) {
+                 fprintf (stderr, "got error %d on RPC\n", rpc_status);

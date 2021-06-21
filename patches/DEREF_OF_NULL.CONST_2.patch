@@ -1,0 +1,19 @@
+commit bd3daf5a563735ebd611b895cbc6ef25b28743b8
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon Apr 19 15:41:54 2021 +0300
+
+    patch27
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-brick-ops.c b/xlators/mgmt/glusterd/src/glusterd-brick-ops.c
+index 6d17ff4..f29910c 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-brick-ops.c
++++ b/xlators/mgmt/glusterd/src/glusterd-brick-ops.c
+@@ -1244,7 +1244,7 @@ _glusterd_restart_gsync_session (dict_t *this, char *key,
+                                                    &slave_host, &slave_vol,
+                                                    &conf_path, errmsg);
+         if (ret) {
+-                if (*errmsg)
++                if (errmsg && *errmsg)
+                         gf_msg ("glusterd", GF_LOG_ERROR, 0,
+                                 GD_MSG_SLAVE_CONFPATH_DETAILS_FETCH_FAIL,
+                                 "%s", *errmsg);

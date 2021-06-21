@@ -1,0 +1,21 @@
+commit 22dc7e24f987af43dbacd0067c6ac337b18c80f4
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sun Apr 18 22:37:42 2021 +0300
+
+    patch15
+
+diff --git a/xlators/features/quota/src/quotad-aggregator.c b/xlators/features/quota/src/quotad-aggregator.c
+index 428153f..0e220ff 100644
+--- a/xlators/features/quota/src/quotad-aggregator.c
++++ b/xlators/features/quota/src/quotad-aggregator.c
+@@ -269,7 +269,9 @@ errx:
+         cli_rsp.op_ret = -1;
+         cli_rsp.op_errstr = "";
+ 
+-        quotad_aggregator_getlimit_cbk (this, frame, &cli_rsp);
++        if (frame != NULL) {
++                quotad_aggregator_getlimit_cbk (this, frame, &cli_rsp);
++        }
+         if (dict)
+                 dict_unref (dict);
+ 

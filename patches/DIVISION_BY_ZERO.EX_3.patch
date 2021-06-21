@@ -1,0 +1,19 @@
+commit 489c3decca83547cb7632d213094d3535493f12f
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 29 13:35:25 2021 +0300
+
+    patch121
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-volume-ops.c b/xlators/mgmt/glusterd/src/glusterd-volume-ops.c
+index 9d34073..dbc4b2b 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-volume-ops.c
++++ b/xlators/mgmt/glusterd/src/glusterd-volume-ops.c
+@@ -214,7 +214,7 @@ glusterd_check_brick_order(dict_t *dict, char *err_str)
+                 ai_info = ai_list_tmp1->info;
+                 ai_list_tmp1 = cds_list_entry (ai_list_tmp1->list.next,
+                                                addrinfo_list_t, list);
+-                if (0 == i % sub_count) {
++                if (sub_count && 0 == i % sub_count) {
+                         j = 0;
+                         continue;
+                 }

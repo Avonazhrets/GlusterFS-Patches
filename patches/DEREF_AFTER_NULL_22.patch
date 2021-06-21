@@ -1,0 +1,21 @@
+commit 58d52c1f8f9d81c289d49788f119f3d173387e07
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon Apr 19 00:48:16 2021 +0300
+
+    patch23
+
+diff --git a/xlators/cluster/dht/src/tier.c b/xlators/cluster/dht/src/tier.c
+index db23b96..a918343 100644
+--- a/xlators/cluster/dht/src/tier.c
++++ b/xlators/cluster/dht/src/tier.c
+@@ -1806,7 +1806,9 @@ tier_demote (migration_args_t *demotion_args)
+                 goto out;
+ 
+ out:
+-        demotion_args->return_value = ret;
++        if (demotion_args) {
++                demotion_args->return_value = ret;
++        }
+         return ret;
+ }
+ 

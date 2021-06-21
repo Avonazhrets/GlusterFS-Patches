@@ -1,0 +1,30 @@
+commit da294862dde5730dcfe393d6c33f0e1627ae71cf
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Fri May 14 00:22:35 2021 +0300
+
+    patch61
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-op-sm.c b/xlators/mgmt/glusterd/src/glusterd-op-sm.c
+index a2c39ae..6f96834 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-op-sm.c
++++ b/xlators/mgmt/glusterd/src/glusterd-op-sm.c
+@@ -628,6 +628,8 @@ glusterd_brick_op_build_payload (glusterd_op_t op, glusterd_brickinfo_t *brickin
+                 if (ret)
+                         goto out;
+                 ret = glusterd_volinfo_find (volname, &volinfo);
++                if (ret)
++                        goto out;
+                 if (volinfo->type == GF_CLUSTER_TYPE_TIER)
+                         snprintf (name, 1024, "%s-tier-dht", volname);
+                 else
+@@ -5028,7 +5030,9 @@ glusterd_op_modify_op_ctx (glusterd_op_t op, void *ctx)
+                                          goto out;
+                          }
+                  }
+-                 glusterd_volinfo_find (volname, &volinfo);
++                 ret = glusterd_volinfo_find(volname, &volinfo);
++                 if (ret)
++                        goto out;
+                  if (conf->op_version < GD_OP_VERSION_3_7_0 &&
+                      volinfo->transport_type == GF_TRANSPORT_RDMA) {
+                          ret = glusterd_op_modify_port_key (op_ctx,

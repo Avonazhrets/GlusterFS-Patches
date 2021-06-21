@@ -1,0 +1,21 @@
+commit cd7b24f49a03361786b6d193cd002de4ffe3f155
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sun Apr 18 22:42:43 2021 +0300
+
+    patch16
+
+diff --git a/xlators/features/quota/src/quotad-aggregator.c b/xlators/features/quota/src/quotad-aggregator.c
+index 0e220ff..26299d1 100644
+--- a/xlators/features/quota/src/quotad-aggregator.c
++++ b/xlators/features/quota/src/quotad-aggregator.c
+@@ -340,7 +340,9 @@ err:
+         rsp.op_ret = -1;
+         rsp.op_errno = op_errno;
+ 
+-        quotad_aggregator_lookup_cbk (this, frame, &rsp);
++        if (frame != NULL) {
++                quotad_aggregator_lookup_cbk (this, frame, &rsp);
++        }
+         return ret;
+ }
+ 

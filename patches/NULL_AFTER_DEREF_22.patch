@@ -1,0 +1,74 @@
+commit 4249bc6403fd3e6f9c6ffbb877e818e5026dcb8b
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 23:02:12 2021 +0300
+
+    patch104
+
+diff --git a/xlators/cluster/stripe/src/stripe-helpers.c b/xlators/cluster/stripe/src/stripe-helpers.c
+index 217f4d2..12d1f1a 100644
+--- a/xlators/cluster/stripe/src/stripe-helpers.c
++++ b/xlators/cluster/stripe/src/stripe-helpers.c
+@@ -180,34 +180,35 @@ stripe_fill_lockinfo_xattr (xlator_t *this, stripe_local_t *local,
+ 
+         for (i = 0; i < local->nallocs; i++) {
+                 xattr = local->xattr_list + i;
+-                len = xattr->xattr_len;
+-
+-                if (len && xattr && xattr->xattr_value) {
+-                        ret = dict_reset (tmp2);
+-                        if (ret < 0) {
+-                                gf_log (this->name, GF_LOG_DEBUG,
+-                                        "dict_reset failed (%s)",
+-                                        strerror (-ret));
+-                        }
+-
+-                        ret = dict_unserialize (xattr->xattr_value,
+-                                                xattr->xattr_len,
+-                                                &tmp2);
+-                        if (ret < 0) {
+-                                gf_log (this->name, GF_LOG_WARNING,
+-                                        "dict_unserialize failed (%s)",
+-                                        strerror (-ret));
+-                                ret = -1;
+-                                goto out;
+-                        }
+-
+-                        tmp1 = dict_copy (tmp2, tmp1);
+-                        if (tmp1 == NULL) {
+-                                gf_log (this->name, GF_LOG_WARNING,
+-                                        "dict_copy failed (%s)",
+-                                        strerror (-ret));
+-                                ret = -1;
+-                                goto out;
++                if (xattr) {
++                        len = xattr->xattr_len;
++                        if (len && xattr->xattr_value) {
++                                ret = dict_reset (tmp2);
++                                if (ret < 0) {
++                                        gf_log (this->name, GF_LOG_DEBUG,
++                                                "dict_reset failed (%s)",
++                                                strerror (-ret));
++                                }
++
++                                ret = dict_unserialize (xattr->xattr_value,
++                                                        xattr->xattr_len,
++                                                        &tmp2);
++                                if (ret < 0) {
++                                        gf_log (this->name, GF_LOG_WARNING,
++                                                "dict_unserialize failed (%s)",
++                                                strerror (-ret));
++                                        ret = -1;
++                                        goto out;
++                                }
++
++                                tmp1 = dict_copy (tmp2, tmp1);
++                                if (tmp1 == NULL) {
++                                        gf_log (this->name, GF_LOG_WARNING,
++                                                "dict_copy failed (%s)",
++                                                strerror (-ret));
++                                        ret = -1;
++                                        goto out;
++                                }
+                         }
+                 }
+         }

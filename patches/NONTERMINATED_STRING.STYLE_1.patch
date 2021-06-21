@@ -1,0 +1,81 @@
+commit 9905c3a8c58d79aa7f3ec4c5f2e7c8a1c4511caa
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue May 18 19:22:15 2021 +0300
+
+    patch108
+
+diff --git a/xlators/features/changelog/src/changelog-encoders.c b/xlators/features/changelog/src/changelog-encoders.c
+index 9503023..5bcb0d4 100644
+--- a/xlators/features/changelog/src/changelog-encoders.c
++++ b/xlators/features/changelog/src/changelog-encoders.c
+@@ -21,7 +21,7 @@ entry_fn (void *data, char *buffer, gf_boolean_t encode)
+ 
+         if (encode) {
+                 tmpbuf = uuid_utoa (ce->cef_uuid);
+-                CHANGELOG_FILL_BUFFER (buffer, bufsz, tmpbuf, strlen (tmpbuf));
++                CHANGELOG_FILL_BUFFER (buffer, bufsz, tmpbuf, strlen (tmpbuf) + 1);
+         } else {
+                 CHANGELOG_FILL_BUFFER (buffer, bufsz,
+                                        ce->cef_uuid, sizeof (uuid_t));
+@@ -29,7 +29,7 @@ entry_fn (void *data, char *buffer, gf_boolean_t encode)
+ 
+         CHANGELOG_FILL_BUFFER (buffer, bufsz, "/", 1);
+         CHANGELOG_FILL_BUFFER (buffer, bufsz,
+-                               ce->cef_bname, strlen (ce->cef_bname));
++                               ce->cef_bname, strlen (ce->cef_bname) + 1);
+         return bufsz;
+ }
+ 
+@@ -44,7 +44,7 @@ del_entry_fn (void *data, char *buffer, gf_boolean_t encode)
+ 
+         if (encode) {
+                 tmpbuf = uuid_utoa (ce->cef_uuid);
+-                CHANGELOG_FILL_BUFFER (buffer, bufsz, tmpbuf, strlen (tmpbuf));
++                CHANGELOG_FILL_BUFFER (buffer, bufsz, tmpbuf, strlen (tmpbuf) + 1);
+         } else {
+                 CHANGELOG_FILL_BUFFER (buffer, bufsz,
+                                        ce->cef_uuid, sizeof (uuid_t));
+@@ -52,14 +52,14 @@ del_entry_fn (void *data, char *buffer, gf_boolean_t encode)
+ 
+         CHANGELOG_FILL_BUFFER (buffer, bufsz, "/", 1);
+         CHANGELOG_FILL_BUFFER (buffer, bufsz,
+-                               ce->cef_bname, strlen (ce->cef_bname));
++                               ce->cef_bname, strlen (ce->cef_bname) + 1);
+         CHANGELOG_FILL_BUFFER (buffer, bufsz, "\0", 1);
+ 
+         if (ce->cef_path[0] == '\0') {
+                 CHANGELOG_FILL_BUFFER (buffer, bufsz, "\0", 1);
+         } else {
+                 CHANGELOG_FILL_BUFFER (buffer, bufsz,
+-                                       ce->cef_path, strlen (ce->cef_path));
++                                       ce->cef_path, strlen (ce->cef_path) + 1);
+         }
+ 
+         return bufsz;
+@@ -76,7 +76,7 @@ fop_fn (void *data, char *buffer, gf_boolean_t encode)
+ 
+         if (encode) {
+                 (void) snprintf (buf, sizeof (buf), "%d", fop);
+-                CHANGELOG_FILL_BUFFER (buffer, bufsz, buf, strlen (buf));
++                CHANGELOG_FILL_BUFFER (buffer, bufsz, buf, strlen (buf) + 1);
+         } else
+                 CHANGELOG_FILL_BUFFER (buffer, bufsz, &fop, sizeof (fop));
+ 
+@@ -94,7 +94,7 @@ number_fn (void *data, char *buffer, gf_boolean_t encode)
+ 
+         if (encode) {
+                 (void) snprintf (buf, sizeof (buf), "%u", nr);
+-                CHANGELOG_FILL_BUFFER (buffer, bufsz, buf, strlen (buf));
++                CHANGELOG_FILL_BUFFER (buffer, bufsz, buf, strlen (buf) + 1);
+         } else
+                 CHANGELOG_FILL_BUFFER (buffer, bufsz, &nr, sizeof (unsigned int));
+ 
+@@ -184,7 +184,7 @@ changelog_encode_ascii (xlator_t *this, changelog_log_data_t *cld)
+         /* extra bytes for decorations */
+         buffer = alloca (gfid_len + cld->cld_ptr_len + 10);
+         CHANGELOG_STORE_ASCII (priv, buffer,
+-                               off, gfid_str, gfid_len, cld);
++                               off, gfid_str, gfid_len + 1, cld);
+ 
+         if (cld->cld_xtra_records)
+                 changelog_encode_write_xtra (cld, buffer, &off, _gf_true);

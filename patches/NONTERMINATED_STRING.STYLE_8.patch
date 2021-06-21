@@ -1,0 +1,19 @@
+commit 6ecf095bef7955cb574f037fc3ee7383b1cf8383
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed May 19 12:35:16 2021 +0300
+
+    patch115
+
+diff --git a/xlators/debug/io-stats/src/io-stats.c b/xlators/debug/io-stats/src/io-stats.c
+index 5844829..8bd4a63 100644
+--- a/xlators/debug/io-stats/src/io-stats.c
++++ b/xlators/debug/io-stats/src/io-stats.c
+@@ -3031,7 +3031,7 @@ conditional_dump (dict_t *dict, char *key, data_t *value, void *data)
+         filename = alloca0 (namelen);
+         memcpy (filename, data_to_str (value), value->len);
+         memcpy (filename + value->len, ".", 1);
+-        memcpy (filename + value->len + 1, this->name, strlen(this->name));
++        memcpy (filename + value->len + 1, this->name, strlen(this->name) + 1);
+ 
+         /* convert any slashes to '-' so that fopen works correctly */
+         slash_ptr = strchr (filename + value->len + 1, '/');

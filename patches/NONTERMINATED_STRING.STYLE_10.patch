@@ -1,0 +1,36 @@
+commit 89083d9445b628b81cad361e153c4ac54d2fb0de
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed May 19 18:46:36 2021 +0300
+
+    patch117
+
+diff --git a/xlators/debug/trace/src/trace.c b/xlators/debug/trace/src/trace.c
+index 451ef9a..d8270cf 100644
+--- a/xlators/debug/trace/src/trace.c
++++ b/xlators/debug/trace/src/trace.c
+@@ -3109,10 +3109,10 @@ reconfigure (xlator_t *this, dict_t *options)
+                         if (gf_fop_list[i])
+                                 strncpy (trace_fop_names[i].name,
+                                          gf_fop_list[i],
+-                                         strlen (gf_fop_list[i]));
++                                         sizeof(trace_fop_names[i].name));
+                         else
+                                 strncpy (trace_fop_names[i].name, ":O",
+-                                         strlen (":O"));
++                                         sizeof(trace_fop_names[i].name));
+                         trace_fop_names[i].enabled = 1;
+                 }
+         }
+@@ -3185,10 +3185,10 @@ init (xlator_t *this)
+                         if (gf_fop_list[i])
+                                 strncpy (trace_fop_names[i].name,
+                                          gf_fop_list[i],
+-                                         strlen (gf_fop_list[i]));
++                                         sizeof(trace_fop_names[i].name));
+                         else
+                                 strncpy (trace_fop_names[i].name, ":O",
+-                                         strlen (":O"));
++                                         sizeof(trace_fop_names[i].name));
+                         trace_fop_names[i].enabled = 1;
+                 }
+         }

@@ -1,0 +1,19 @@
+commit 6e82e5810325559a1ffcba0eaac4ba57d4a9eeca
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue May 18 19:27:00 2021 +0300
+
+    patch109
+
+diff --git a/xlators/features/changelog/src/changelog-helpers.c b/xlators/features/changelog/src/changelog-helpers.c
+index 2a17fab..3c55df9 100644
+--- a/xlators/features/changelog/src/changelog-helpers.c
++++ b/xlators/features/changelog/src/changelog-helpers.c
+@@ -1060,7 +1060,7 @@ changelog_snap_handle_ascii_change (xlator_t *this,
+         /*  extra bytes for decorations */
+         buffer = alloca (gfid_len + cld->cld_ptr_len + 10);
+         CHANGELOG_STORE_ASCII (priv, buffer,
+-                        off, gfid_str, gfid_len, cld);
++                        off, gfid_str, gfid_len + 1, cld);
+ 
+         CHANGELOG_FILL_BUFFER (buffer, off, "\0", 1);
+ 

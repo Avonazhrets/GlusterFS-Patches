@@ -1,0 +1,19 @@
+commit 91661542cc6201cb649e73bc8d0c0514e6dd5ee7
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 29 21:55:39 2021 +0300
+
+    patch124
+
+diff --git a/xlators/mount/fuse/src/fuse-bridge.c b/xlators/mount/fuse/src/fuse-bridge.c
+index a2d95d2..9cf8f00 100644
+--- a/xlators/mount/fuse/src/fuse-bridge.c
++++ b/xlators/mount/fuse/src/fuse-bridge.c
+@@ -2943,7 +2943,7 @@ fuse_readdirp_cbk (call_frame_t *frame, void *cookie, xlator_t *this,
+ 		fde->dirent.off = entry->d_off;
+ 		fde->dirent.type = entry->d_type;
+ 		fde->dirent.namelen = strlen (entry->d_name);
+-		strncpy (fde->dirent.name, entry->d_name, fde->dirent.namelen);
++		strncpy (fde->dirent.name, entry->d_name, fde->dirent.namelen + 1);
+ 		size += FUSE_DIRENTPLUS_SIZE (fde);
+ 
+ 		if (!entry->inode)

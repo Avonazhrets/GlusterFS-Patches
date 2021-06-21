@@ -1,0 +1,20 @@
+commit 7829db740716d1128f9b1bd8e3a872987ca3d23b
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed May 19 12:15:36 2021 +0300
+
+    patch113
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-utils.c b/xlators/mgmt/glusterd/src/glusterd-utils.c
+index 78b4cf0..2ec2c5f 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-utils.c
++++ b/xlators/mgmt/glusterd/src/glusterd-utils.c
+@@ -5119,8 +5119,7 @@ glusterd_remote_hostname_get (rpcsvc_request_t *req, char *remote_host, int len)
+                 tmp_host = hostname = canon;
+         }
+ 
+-        strncpy (remote_host, hostname, strlen (hostname));
+-
++        snprintf(remote_host, len, "%s", hostname);
+ 
+ out:
+         GF_FREE (tmp_host);

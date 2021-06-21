@@ -1,0 +1,21 @@
+commit 6fa084e45d76de3b1fecd1b96927c9ac8ef6b0e1
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed May 19 11:52:56 2021 +0300
+
+    patch111
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-store.c b/xlators/mgmt/glusterd/src/glusterd-store.c
+index efc8341..18ce60b 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-store.c
++++ b/xlators/mgmt/glusterd/src/glusterd-store.c
+@@ -3797,6 +3797,10 @@ glusterd_store_retrieve_snap (char *snapname)
+         }
+ 
+         strncpy (snap->snapname, snapname, strlen(snapname));
++        ret = snprintf(snap->snapname, sizeof(snap->snapname), "%s", snapname);
++        if (ret < 0 || ret >= sizeof(snap->snapname)) {
++                goto out;
++        }
+         ret = glusterd_store_update_snap (snap);
+         if (ret) {
+                 gf_msg (this->name, GF_LOG_ERROR, 0,

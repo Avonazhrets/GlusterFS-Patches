@@ -1,0 +1,20 @@
+commit a042691e9312d0e94370f8270f40c4151386f1f5
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed Apr 14 16:35:43 2021 +0300
+
+    patch4
+
+diff --git a/xlators/debug/error-gen/src/error-gen.c b/xlators/debug/error-gen/src/error-gen.c
+index 80f46de..c537e14 100644
+--- a/xlators/debug/error-gen/src/error-gen.c
++++ b/xlators/debug/error-gen/src/error-gen.c
+@@ -1509,7 +1509,8 @@ reconfigure (xlator_t *this, dict_t *options)
+ 
+         ret = 0;
+ out:
+-        gf_log (this->name, GF_LOG_DEBUG, "reconfigure returning %d", ret);
++        gf_log (this ? this->name : "error-gen", GF_LOG_DEBUG,
++                "reconfigure returning %d", ret);
+         return ret;
+ }
+ 

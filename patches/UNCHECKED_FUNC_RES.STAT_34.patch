@@ -1,0 +1,26 @@
+commit c01590b153d36bd005eb828df527d88932a6abb3
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 14:12:19 2021 +0300
+
+    patch81
+
+diff --git a/xlators/cluster/stripe/src/stripe.c b/xlators/cluster/stripe/src/stripe.c
+index 021710e..f0ec285 100644
+--- a/xlators/cluster/stripe/src/stripe.c
++++ b/xlators/cluster/stripe/src/stripe.c
+@@ -4895,8 +4895,13 @@ stripe_readdirp_cbk (call_frame_t *frame, void *cookie, xlator_t *this,
+         }
+ 
+         xattrs = dict_new ();
+-        if (xattrs)
+-                (void) stripe_xattr_request_build (this, xattrs, 0, 0, 0, 0);
++        if (xattrs) {
++                if (stripe_xattr_request_build (this, xattrs, 0, 0, 0, 0)) {
++                        op_errno = ENOMEM;
++                        op_ret = -1;
++                        goto out;   
++                }
++        }
+         count = op_ret;
+         list_for_each_entry_safe (local_entry, tmp_entry,
+                                   (&local->entries.list), list) {

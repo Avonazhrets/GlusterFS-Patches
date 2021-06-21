@@ -1,0 +1,29 @@
+commit 8cfe2db4b03c1c92424ed8f41f0085cc66bea21c
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 22:28:04 2021 +0300
+
+    patch98
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-volgen.c b/xlators/mgmt/glusterd/src/glusterd-volgen.c
+index c281e24..7f73a6a 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-volgen.c
++++ b/xlators/mgmt/glusterd/src/glusterd-volgen.c
+@@ -4548,6 +4548,8 @@ nfs_option_handler (volgen_graph_t *graph,
+         }*/
+         if (!volinfo || (volinfo->volname[0] == '\0'))
+                 return 0;
++        if (!vme || !(vme->option))
++                return 0;
+ 
+         if (! strcmp (vme->option, "!rpc-auth.addr.*.allow")) {
+                 ret = gf_asprintf (&aa, "rpc-auth.addr.%s.allow",
+@@ -4685,8 +4687,7 @@ nfs_option_handler (volgen_graph_t *graph,
+                         return -1;
+         }
+ 
+-        if ((strcmp (vme->voltype, "nfs/server") == 0) &&
+-             (vme->option && vme->option[0]!='!') ) {
++        if ((strcmp (vme->voltype, "nfs/server") == 0) && vme->option[0]!='!') {
+                ret = xlator_set_option (xl, vme->option, vme->value);
+                 if (ret)
+                         return -1;

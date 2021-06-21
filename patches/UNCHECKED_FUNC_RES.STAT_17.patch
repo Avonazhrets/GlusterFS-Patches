@@ -1,0 +1,70 @@
+commit e9ca91e740dc70c5ff645f75ff3dc11984dd3b78
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Fri May 14 16:44:06 2021 +0300
+
+    patch64
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-store.c b/xlators/mgmt/glusterd/src/glusterd-store.c
+index 4d22b63..29a3b4a 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-store.c
++++ b/xlators/mgmt/glusterd/src/glusterd-store.c
+@@ -2498,7 +2498,13 @@ glusterd_store_retrieve_bricks (glusterd_volinfo_t *volinfo)
+                                          sizeof (brickinfo->real_path));
+                         } else if (!strncmp (key, GLUSTERD_STORE_KEY_BRICK_PORT,
+                                     strlen (GLUSTERD_STORE_KEY_BRICK_PORT))) {
+-                                gf_string2int (value, &brickinfo->port);
++                                ret = gf_string2int (value, &brickinfo->port);
++                                if (ret == -1) {
++                                        gf_msg(this->name, GF_LOG_ERROR, EINVAL,
++                                                GD_MSG_INCOMPATIBLE_VALUE,
++                                                "Failed to convert "
++                                                "string to integer");
++                                }
+ 
+                                 if (brickinfo->port < priv->base_port) {
+                                         /* This is required to adhere to the
+@@ -2514,7 +2520,13 @@ glusterd_store_retrieve_bricks (glusterd_volinfo_t *volinfo)
+                                 }
+                         } else if (!strncmp (key, GLUSTERD_STORE_KEY_BRICK_RDMA_PORT,
+                                     strlen (GLUSTERD_STORE_KEY_BRICK_RDMA_PORT))) {
+-                                gf_string2int (value, &brickinfo->rdma_port);
++                                ret = gf_string2int (value, &brickinfo->rdma_port);
++                                if (ret == -1) {
++                                        gf_msg(this->name, GF_LOG_ERROR, EINVAL,
++                                                GD_MSG_INCOMPATIBLE_VALUE,
++                                                "Failed to convert "
++                                                "string to integer");
++                                }
+ 
+                                 if (brickinfo->rdma_port < priv->base_port) {
+                                         /* This is required to adhere to the
+@@ -2532,7 +2544,13 @@ glusterd_store_retrieve_bricks (glusterd_volinfo_t *volinfo)
+ 
+                         } else if (!strncmp (key, GLUSTERD_STORE_KEY_BRICK_DECOMMISSIONED,
+                                              strlen (GLUSTERD_STORE_KEY_BRICK_DECOMMISSIONED))) {
+-                                gf_string2int (value, &brickinfo->decommissioned);
++                                ret = gf_string2int (value, &brickinfo->decommissioned);
++                                if (ret == -1) {
++                                        gf_msg(this->name, GF_LOG_ERROR, EINVAL,
++                                                GD_MSG_INCOMPATIBLE_VALUE,
++                                                "Failed to convert "
++                                                "string to integer");
++                                }
+                         } else if (!strncmp (key, GLUSTERD_STORE_KEY_BRICK_DEVICE_PATH,
+                                              strlen (GLUSTERD_STORE_KEY_BRICK_DEVICE_PATH))) {
+                                 strncpy (brickinfo->device_path, value,
+@@ -2543,7 +2561,13 @@ glusterd_store_retrieve_bricks (glusterd_volinfo_t *volinfo)
+                                          sizeof (brickinfo->mount_dir));
+                         } else if (!strncmp (key, GLUSTERD_STORE_KEY_BRICK_SNAP_STATUS,
+                                              strlen (GLUSTERD_STORE_KEY_BRICK_SNAP_STATUS))) {
+-                                gf_string2int (value, &brickinfo->snap_status);
++                                ret = gf_string2int (value, &brickinfo->snap_status);
++                                if (ret == -1) {
++                                        gf_msg(this->name, GF_LOG_ERROR, EINVAL,
++                                                GD_MSG_INCOMPATIBLE_VALUE,
++                                                "Failed to convert "
++                                                "string to integer");
++                                }
+                         } else if (!strncmp (key, GLUSTERD_STORE_KEY_BRICK_FSTYPE,
+                                              strlen (GLUSTERD_STORE_KEY_BRICK_FSTYPE))) {
+                                 strncpy (brickinfo->fstype, value,

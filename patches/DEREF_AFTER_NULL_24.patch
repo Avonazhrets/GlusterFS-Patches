@@ -1,0 +1,25 @@
+commit 0da4953945535f756e30e9fa0d3ab36c8d335386
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon Apr 19 00:55:09 2021 +0300
+
+    patch25
+
+diff --git a/xlators/features/trash/src/trash.c b/xlators/features/trash/src/trash.c
+index 4a41a14..cb27960 100644
+--- a/xlators/features/trash/src/trash.c
++++ b/xlators/features/trash/src/trash.c
+@@ -393,9 +393,11 @@ rename_trash_directory (xlator_t *this)
+         return 0;
+ 
+ out:
+-        frame->local = NULL;
+-        STACK_DESTROY (frame->root);
+-        trash_local_wipe (local);
++        if (frame != NULL) {
++                frame->local = NULL;
++                STACK_DESTROY (frame->root);
++                trash_local_wipe (local);
++        }
+ 
+         return ret;
+ }

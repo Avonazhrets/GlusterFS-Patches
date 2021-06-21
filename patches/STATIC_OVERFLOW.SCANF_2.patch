@@ -1,0 +1,19 @@
+commit d004833c611a32de569dfc7d838ceec6440c47b1
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon May 17 17:51:53 2021 +0300
+
+    patch106
+
+diff --git a/libglusterfs/src/common-utils.c b/libglusterfs/src/common-utils.c
+index 9771dff..65bee4e 100644
+--- a/libglusterfs/src/common-utils.c
++++ b/libglusterfs/src/common-utils.c
+@@ -4112,7 +4112,7 @@ gf_backtrace_fillframes (char *buf)
+ 
+         pos = 0;
+         for (idx = 0; idx < frames - 2; idx++) {
+-                ret = fscanf (fp, "%s", callingfn[idx]);
++                ret = fscanf (fp, "%1023s", callingfn[idx]);
+                 if (ret == EOF)
+                         break;
+                 inc = gf_backtrace_append (buf, pos, callingfn[idx]);

@@ -1,0 +1,24 @@
+commit ddeb8e8a3ece1e3c23904ac47f1318aee3f8d668
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sun May 30 17:16:52 2021 +0300
+
+    patch131
+
+diff --git a/xlators/storage/posix/src/posix.c b/xlators/storage/posix/src/posix.c
+index 941236a..0d2a8f0 100644
+--- a/xlators/storage/posix/src/posix.c
++++ b/xlators/storage/posix/src/posix.c
+@@ -5363,7 +5363,12 @@ posix_fsetxattr (call_frame_t *frame, xlator_t *this,
+         }
+         _fd = pfd->fd;
+ 
+-        posix_fdstat (this, pfd->fd, &stbuf);
++        ret = posix_fdstat (this, pfd->fd, &stbuf);
++	if (ret != 0) {
++                gf_msg (this->name, GF_LOG_WARNING, op_errno, P_MSG_FSTAT_FAILED,
++                        "fstat failed on fd=%p", fd);
++                goto out;
++	}
+ 
+         dict_del (dict, GFID_XATTR_KEY);
+         dict_del (dict, GF_XATTR_VOL_ID_KEY);

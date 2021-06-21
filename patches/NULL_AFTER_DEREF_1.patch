@@ -1,0 +1,20 @@
+commit c10a5471b36834ec7fbce837ddb384fef528059e
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 20:15:51 2021 +0300
+
+    patch83
+
+diff --git a/xlators/cluster/afr/src/afr-common.c b/xlators/cluster/afr/src/afr-common.c
+index 2db1c27..6a4a74f 100644
+--- a/xlators/cluster/afr/src/afr-common.c
++++ b/xlators/cluster/afr/src/afr-common.c
+@@ -6282,8 +6282,7 @@ afr_fav_child_reset_sink_xattrs_cbk (int ret, call_frame_t *heal_frame,
+         afr_inode_refresh (txn_frame, this, local->inode, NULL,
+                            local->refreshfn);
+ 
+-        if (heal_frame)
+-                AFR_STACK_DESTROY (heal_frame);
++        AFR_STACK_DESTROY (heal_frame);
+ 
+         return 0;
+ }

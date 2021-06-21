@@ -1,0 +1,19 @@
+commit ff5eb954c3658cdec8fba29a3cff9f81f1eae919
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue Apr 27 15:48:21 2021 +0300
+
+    patch37
+
+diff --git a/xlators/storage/posix/src/posix.c b/xlators/storage/posix/src/posix.c
+index 92c22be..941236a 100644
+--- a/xlators/storage/posix/src/posix.c
++++ b/xlators/storage/posix/src/posix.c
+@@ -2197,7 +2197,7 @@ posix_unlink (call_frame_t *frame, xlator_t *this,
+ 
+         unwind_dict = dict_new ();
+         if (!unwind_dict) {
+-                op_errno = -ENOMEM;
++                op_errno = ENOMEM;
+                 op_ret = -1;
+                 goto out;
+         }

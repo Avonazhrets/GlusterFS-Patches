@@ -1,0 +1,19 @@
+commit b62d7740cc9573e921b586638a39ebf4e25b2ffc
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 20:32:00 2021 +0300
+
+    patch85
+
+diff --git a/cli/src/cli-xml-output.c b/cli/src/cli-xml-output.c
+index 29ee81b..da83287 100644
+--- a/cli/src/cli-xml-output.c
++++ b/cli/src/cli-xml-output.c
+@@ -68,7 +68,7 @@ cli_begin_xml_output (xmlTextWriterPtr *writer, xmlDocPtr *doc)
+         int             ret = -1;
+ 
+         *writer = xmlNewTextWriterDoc (doc, 0);
+-        if (writer == NULL) {
++        if (*writer == NULL) {
+                 ret = -1;
+                 goto out;
+         }

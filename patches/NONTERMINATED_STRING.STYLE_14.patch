@@ -1,0 +1,21 @@
+commit 82c1a109d9656dde16f2f0bca73d42f6d45c0b2c
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 29 22:47:30 2021 +0300
+
+    patch127
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-store.c b/xlators/mgmt/glusterd/src/glusterd-store.c
+index 18ce60b..e17b6ff 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-store.c
++++ b/xlators/mgmt/glusterd/src/glusterd-store.c
+@@ -3627,6 +3627,10 @@ glusterd_recreate_vol_brick_mounts (xlator_t  *this,
+                                         ret = -1;
+                                         goto out;
+                                 }
++                                if (strlen(abspath) >= sizeof(brickinfo->real_path)) {
++                                        ret = -1;
++                                        goto out;
++                                }
+                                 strncpy (brickinfo->real_path, abspath,
+                                          strlen(abspath));
+                         }

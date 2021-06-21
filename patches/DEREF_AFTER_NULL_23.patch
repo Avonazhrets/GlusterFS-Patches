@@ -1,0 +1,21 @@
+commit b894f26d5de0f614c829bf5ff7eb2c3f6387041a
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon Apr 19 00:51:54 2021 +0300
+
+    patch24
+
+diff --git a/xlators/cluster/dht/src/tier.c b/xlators/cluster/dht/src/tier.c
+index a918343..3c6cba3 100644
+--- a/xlators/cluster/dht/src/tier.c
++++ b/xlators/cluster/dht/src/tier.c
+@@ -2544,7 +2544,9 @@ static void
+         ret = 0;
+ out:
+ 
+-        args->return_value = ret;
++        if (args) {
++                args->return_value = ret;
++        }
+ 
+         return NULL;
+ }

@@ -1,0 +1,24 @@
+commit a85f22f31da57c4b2b884c795fa3ee97af84c96b
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 22:59:16 2021 +0300
+
+    patch103
+
+diff --git a/xlators/system/posix-acl/src/posix-acl.c b/xlators/system/posix-acl/src/posix-acl.c
+index 5dac688..f5287a1 100644
+--- a/xlators/system/posix-acl/src/posix-acl.c
++++ b/xlators/system/posix-acl/src/posix-acl.c
+@@ -251,10 +251,12 @@ posix_acl_log_permit_denied (call_frame_t *frame, inode_t *inode, int want,
+                              struct posix_acl_ctx *ctx, struct posix_acl *acl)
+ {
+         char     *acl_str = NULL;
+-        client_t *client  = frame->root->client;
++        client_t *client  = NULL;
+ 
+         if (!frame || !inode || !ctx)
+                 goto out;
++        
++        client = frame->root->client;
+ 
+         posix_acl_get_acl_string (frame, acl, &acl_str);
+ 

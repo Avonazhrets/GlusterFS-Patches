@@ -1,0 +1,21 @@
+commit 72e88e9857bdb384d6396f493413ad97071eb5b7
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed Apr 14 17:01:42 2021 +0300
+
+    patch6
+
+diff --git a/libglusterfs/src/gfdb/gfdb_data_store_helper.c b/libglusterfs/src/gfdb/gfdb_data_store_helper.c
+index fba5ec5..43177ef 100644
+--- a/libglusterfs/src/gfdb/gfdb_data_store_helper.c
++++ b/libglusterfs/src/gfdb/gfdb_data_store_helper.c
+@@ -338,7 +338,9 @@ out:
+                 GF_FREE (ret_buffer);
+                 ret_buffer = NULL;
+         }
+-        *in_buffer = ret_buffer;
++        if (in_buffer) {
++                *in_buffer = ret_buffer;
++        }
+         return count;
+ }
+ 

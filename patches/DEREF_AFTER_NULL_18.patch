@@ -1,0 +1,21 @@
+commit 5cc4ebcc104496ee07e58f3e22df5c5967f6fdfb
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon Apr 19 00:32:48 2021 +0300
+
+    patch19
+
+diff --git a/xlators/cluster/stripe/src/stripe.c b/xlators/cluster/stripe/src/stripe.c
+index 67006ab..63b9b0c 100644
+--- a/xlators/cluster/stripe/src/stripe.c
++++ b/xlators/cluster/stripe/src/stripe.c
+@@ -3630,7 +3630,9 @@ stripe_writev_cbk (call_frame_t *frame, void *cookie, xlator_t *this,
+                                      &mlocal->post_buf, NULL);
+         }
+ out:
+-	STRIPE_STACK_DESTROY(frame);
++	if (frame) {
++	        STRIPE_STACK_DESTROY(frame);
++        }
+         return 0;
+ }
+ 

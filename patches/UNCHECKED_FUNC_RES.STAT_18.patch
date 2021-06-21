@@ -1,0 +1,25 @@
+commit 873910f6746124b1987d1bba16a90ba4fa63f290
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Fri May 14 16:47:58 2021 +0300
+
+    patch65
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-store.c b/xlators/mgmt/glusterd/src/glusterd-store.c
+index 29a3b4a..34b88f5 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-store.c
++++ b/xlators/mgmt/glusterd/src/glusterd-store.c
+@@ -2587,7 +2587,13 @@ glusterd_store_retrieve_bricks (glusterd_volinfo_t *volinfo)
+                         } else if (!strncmp (key,
+                                              GLUSTERD_STORE_KEY_BRICK_FSID,
+                                              strlen (GLUSTERD_STORE_KEY_BRICK_FSID))) {
+-                                gf_string2uint64 (value, &brickinfo->statfs_fsid);
++                                ret = gf_string2uint64(value, &brickinfo->statfs_fsid);
++                                if (ret) {
++                                        gf_msg(this->name, GF_LOG_ERROR, 0, GD_MSG_INVALID_ENTRY,
++                                                "%s "
++                                                "is not a valid uint64_t value",
++                                                value);
++                                }
+                         } else if (!strcmp(key,
+                                     GLUSTERD_STORE_KEY_BRICK_UUID)) {
+                                 gf_uuid_parse (value, brickinfo->uuid);

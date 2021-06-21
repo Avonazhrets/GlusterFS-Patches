@@ -1,0 +1,36 @@
+commit 33b09435ccfb9c54c7a9e4164d5abe18d9343c0e
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon Apr 19 15:38:31 2021 +0300
+
+    patch26
+
+diff --git a/xlators/features/changelog/lib/src/gf-history-changelog.c b/xlators/features/changelog/lib/src/gf-history-changelog.c
+index 4355396..4e9208b 100644
+--- a/xlators/features/changelog/lib/src/gf-history-changelog.c
++++ b/xlators/features/changelog/lib/src/gf-history-changelog.c
+@@ -800,6 +800,12 @@ gf_history_changelog (char* changelog_dir, unsigned long start,
+         char                            htime_dir[PATH_MAX]     = {0,};
+         char                            buffer[PATH_MAX]        = {0,};
+ 
++        this = THIS;
++        if (!this) {
++                ret = -1;
++                goto out;
++        }
++
+         pthread_attr_t attr;
+ 
+         ret = pthread_attr_init (&attr);
+@@ -810,12 +816,6 @@ gf_history_changelog (char* changelog_dir, unsigned long start,
+                 return -1;
+         }
+ 
+-        this = THIS;
+-        if (!this) {
+-                ret = -1;
+-                goto out;
+-        }
+-
+         jnl = (gf_changelog_journal_t *) GF_CHANGELOG_GET_API_PTR (this);
+         if (!jnl) {
+                 ret = -1;

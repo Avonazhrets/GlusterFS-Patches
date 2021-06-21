@@ -1,0 +1,18 @@
+commit 368360dc503ec3b05f1d640de2ddd7717bec3dce
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed Apr 14 16:31:16 2021 +0300
+
+    patch3
+
+diff --git a/xlators/cluster/ec/src/ec-data.c b/xlators/cluster/ec/src/ec-data.c
+index 28bf988..9d64280 100644
+--- a/xlators/cluster/ec/src/ec-data.c
++++ b/xlators/cluster/ec/src/ec-data.c
+@@ -55,6 +55,7 @@ ec_cbk_data_t * ec_cbk_data_allocate(call_frame_t * frame, xlator_t * this,
+         gf_msg (this->name, GF_LOG_ERROR, ENOMEM,
+                 EC_MSG_NO_MEMORY, "Failed to allocate memory for an "
+                                          "answer.");
++        return NULL;
+     }
+ 
+     cbk->fop = fop;

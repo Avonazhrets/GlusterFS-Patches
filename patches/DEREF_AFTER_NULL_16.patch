@@ -1,0 +1,19 @@
+commit 53edc479d727fab097cc514469b79f87ef22a7b8
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon Apr 19 00:22:15 2021 +0300
+
+    patch17
+
+diff --git a/xlators/performance/readdir-ahead/src/readdir-ahead.c b/xlators/performance/readdir-ahead/src/readdir-ahead.c
+index 8827b8b..8bb3875 100644
+--- a/xlators/performance/readdir-ahead/src/readdir-ahead.c
++++ b/xlators/performance/readdir-ahead/src/readdir-ahead.c
+@@ -682,7 +682,7 @@ init(xlator_t *this)
+ 	return 0;
+ 
+ err:
+-	if (this->local_pool)
++	if (this && this->local_pool)
+ 		mem_pool_destroy(this->local_pool);
+ 	if (priv)
+ 		GF_FREE(priv);

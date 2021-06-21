@@ -1,0 +1,19 @@
+commit 33e442a6f10f97071cd0a737723235d9490cc7a3
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 29 13:27:25 2021 +0300
+
+    patch120
+
+diff --git a/cli/src/cli-cmd-volume.c b/cli/src/cli-cmd-volume.c
+index ca9da0a..a14fa58 100644
+--- a/cli/src/cli-cmd-volume.c
++++ b/cli/src/cli-cmd-volume.c
+@@ -1101,7 +1101,7 @@ cli_tier_validate_replica_type (dict_t *dict, int type)
+          * */
+ 
+ 
+-        if (brick_count % replica_count) {
++        if (replica_count && brick_count % replica_count) {
+              if (type == GF_CLUSTER_TYPE_REPLICATE)
+                      cli_err ("number of bricks is not a multiple of "
+                               "replica count");

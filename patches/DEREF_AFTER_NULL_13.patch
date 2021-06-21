@@ -1,0 +1,21 @@
+commit a00689cc58fd8242b7406bec003ce5bea9b65ad0
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sun Apr 18 22:09:02 2021 +0300
+
+    patch14
+
+diff --git a/xlators/features/quota/src/quota.c b/xlators/features/quota/src/quota.c
+index a307845..0f8493a 100644
+--- a/xlators/features/quota/src/quota.c
++++ b/xlators/features/quota/src/quota.c
+@@ -1386,7 +1386,9 @@ done:
+         return 0;
+ 
+ err:
+-        quota_handle_validate_error (frame, -1, op_errno);
++        if (frame != NULL) {
++                quota_handle_validate_error (frame, -1, op_errno);
++        }
+ 
+         inode_unref (_inode);
+         return 0;

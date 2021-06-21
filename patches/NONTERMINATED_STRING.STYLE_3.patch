@@ -1,0 +1,32 @@
+commit 56591eeed1249a329464c1e0ac8a5df6f30150d1
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed May 19 11:42:26 2021 +0300
+
+    patch110
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-handshake.c b/xlators/mgmt/glusterd/src/glusterd-handshake.c
+index c7e419c..cc98c29 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-handshake.c
++++ b/xlators/mgmt/glusterd/src/glusterd-handshake.c
+@@ -851,9 +851,19 @@ __server_getspec (rpcsvc_request_t *req)
+          * support nfs style mount parameters for native gluster mount
+          */
+         if (volume[0] == '/')
+-                strncpy (peerinfo->volname, &volume[1], strlen(&volume[1]));
++                ret = snprintf(peerinfo->volname, sizeof(peerinfo->volname), "%s",
++                       &volume[1]);
+         else
+-                strncpy (peerinfo->volname, volume, strlen(volume));
++                ret = snprintf(peerinfo->volname, sizeof(peerinfo->volname), "%s",
++                       volume);
++        if (ret < 0 || ret >= sizeof(peerinfo->volname)) {
++                gf_msg(this->name, GF_LOG_ERROR, 0, GD_MSG_VOLINFO_GET_FAIL,
++                "peerinfo->volname %s truncated or error occurred: "
++                "(ret: %d)",
++                peerinfo->volname, ret);
++                ret = -1;
++                goto fail;
++        }
+ 
+         ret = glusterd_get_args_from_dict (&args, peerinfo, &brick_name);
+         if (ret) {

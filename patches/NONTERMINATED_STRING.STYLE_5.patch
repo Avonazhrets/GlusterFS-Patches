@@ -1,0 +1,33 @@
+commit e4778eceb9ab33fc729241dac3124c184fe4daa8
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed May 19 12:14:28 2021 +0300
+
+    patch112
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-utils.c b/xlators/mgmt/glusterd/src/glusterd-utils.c
+index e464381..78b4cf0 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-utils.c
++++ b/xlators/mgmt/glusterd/src/glusterd-utils.c
+@@ -1283,7 +1283,7 @@ glusterd_brickinfo_new_from_brick (char *brick,
+                                 goto out;
+                         }
+                 }
+-                strncpy (new_brickinfo->real_path, abspath, strlen(abspath));
++                strncpy (new_brickinfo->real_path, abspath, sizeof(new_brickinfo->real_path));
+         }
+ 
+         *brickinfo = new_brickinfo;
+@@ -4336,11 +4336,11 @@ glusterd_volinfo_copy_brickinfo (glusterd_volinfo_t *old_volinfo,
+                                         goto out;
+                                 }
+                                 strncpy (new_brickinfo->real_path, abspath,
+-                                         strlen(abspath));
++                                         sizeof(new_brickinfo->real_path));
+                         } else {
+                                 strncpy (new_brickinfo->real_path,
+                                          old_brickinfo->real_path,
+-                                         strlen (old_brickinfo->real_path));
++                                         sizeof(new_brickinfo->real_path));
+                         }
+                 }
+         }

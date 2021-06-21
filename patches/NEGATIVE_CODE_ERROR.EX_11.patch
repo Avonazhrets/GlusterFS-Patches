@@ -1,0 +1,34 @@
+commit 8421b9d485c3302bb31010f33d6356b92c0d234a
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue Apr 27 16:01:44 2021 +0300
+
+    patch38
+
+diff --git a/libglusterfs/src/store.c b/libglusterfs/src/store.c
+index ac432cc..7a50921 100644
+--- a/libglusterfs/src/store.c
++++ b/libglusterfs/src/store.c
+@@ -260,9 +260,20 @@ gf_store_retrieve_value (gf_store_handle_t *handle, char *key, char **value)
+                         "Unable to open file %s", handle->path);
+                 goto out;
+         }
+-        if (!handle->read)
+-                handle->read = fdopen (dup(handle->fd), "r");
+-        else
++        if (!handle->read) {
++                int duped_fd = dup(handle->fd);
++                if (duped_fd >= 0) {
++                        handle->read = fdopen(duped_fd, "r");
++                }
++                if (!handle->read) {
++                        if (duped_fd != -1) {
++                                sys_close(duped_fd);
++                        }
++                        gf_msg("", GF_LOG_ERROR, errno, LG_MSG_FILE_OP_FAILED,
++                                "Unable to open file %s", handle->path);
++                        goto out;
++                }
++        } else
+                 fseek (handle->read, 0, SEEK_SET);
+ 
+         if (!handle->read) {

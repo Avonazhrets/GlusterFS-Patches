@@ -1,0 +1,19 @@
+commit 45bd3062111ff9f7f5a0ed067e433b197f912dec
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 22:18:18 2021 +0300
+
+    patch95
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-rpc-ops.c b/xlators/mgmt/glusterd/src/glusterd-rpc-ops.c
+index 2d4b09d..effc5bf 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-rpc-ops.c
++++ b/xlators/mgmt/glusterd/src/glusterd-rpc-ops.c
+@@ -534,7 +534,7 @@ out:
+ 
+         GF_ASSERT (ctx);
+ 
+-        if (ctx->req)//reverse probe doesn't have req
++        if (ctx && ctx->req)//reverse probe doesn't have req
+                 ret = glusterd_xfer_cli_probe_resp (ctx->req, op_ret, op_errno,
+                                                     NULL, ctx->hostname,
+                                                     ctx->port, ctx->dict);

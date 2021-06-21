@@ -1,0 +1,25 @@
+commit 6c46b0816de56ed7123bd9e03149113f7fa9c4f7
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 22:44:26 2021 +0300
+
+    patch99
+
+diff --git a/glusterfsd/src/glusterfsd-mgmt.c b/glusterfsd/src/glusterfsd-mgmt.c
+index ca706d1..9a80745 100644
+--- a/glusterfsd/src/glusterfsd-mgmt.c
++++ b/glusterfsd/src/glusterfsd-mgmt.c
+@@ -1908,11 +1908,9 @@ out:
+         if (locked)
+                 UNLOCK (&ctx->volfile_lock);
+ 
+-        if (frame) {
+-                GF_FREE (frame->local);
+-                frame->local = NULL;
+-                STACK_DESTROY (frame->root);
+-        }
++        GF_FREE (frame->local);
++        frame->local = NULL;
++        STACK_DESTROY (frame->root);
+ 
+         free (rsp.spec);
+ 

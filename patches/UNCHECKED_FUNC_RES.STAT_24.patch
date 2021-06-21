@@ -1,0 +1,21 @@
+commit 5d5020bed7c7cd61d88a2b2019f9f86c098484d0
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Fri May 14 20:44:12 2021 +0300
+
+    patch71
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-volgen.c b/xlators/mgmt/glusterd/src/glusterd-volgen.c
+index 127be17..e1de0ad 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-volgen.c
++++ b/xlators/mgmt/glusterd/src/glusterd-volgen.c
+@@ -4987,6 +4987,10 @@ build_rebalance_volfile (glusterd_volinfo_t *volinfo, char *filepath,
+                 return -1;
+ 
+         ret = volgen_graph_build_clients (&graph, volinfo, set_dict, NULL);
++        if (ret)
++                goto out;
++        
++        
+         if (volinfo->type == GF_CLUSTER_TYPE_TIER)
+                 ret = volume_volgen_graph_build_clusters_tier
+                                         (&graph, volinfo, _gf_false);

@@ -1,0 +1,56 @@
+commit 23d229c22eaea9876e2102f97b5197140429ec90
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon May 17 18:10:12 2021 +0300
+
+    patch107
+
+diff --git a/libglusterfs/src/statedump.c b/libglusterfs/src/statedump.c
+index 697ddc3..f3b9187 100644
+--- a/libglusterfs/src/statedump.c
++++ b/libglusterfs/src/statedump.c
+@@ -91,19 +91,19 @@ gf_proc_dump_set_path (char *dump_options_file)
+         if (!fp)
+                 goto out;
+ 
+-        ret = fscanf (fp, "%s", buf);
++        ret = fscanf (fp, "%255s", buf);
+ 
+         while (ret != EOF) {
+                 key = strtok_r (buf, "=", &saveptr);
+                 if (!key) {
+-                        ret = fscanf (fp, "%s", buf);
++                        ret = fscanf (fp, "%255s", buf);
+                         continue;
+                 }
+ 
+                 value = strtok_r (NULL, "=", &saveptr);
+ 
+                 if (!value) {
+-                        ret = fscanf (fp, "%s", buf);
++                        ret = fscanf (fp, "%255s", buf);
+                         continue;
+                 }
+                 if (!strcmp (key, "path")) {
+@@ -745,19 +745,19 @@ gf_proc_dump_options_init ()
+         // swallow the errors if setting statedump file path is failed.
+         ret = gf_proc_dump_set_path (dump_option_file);
+ 
+-        ret = fscanf (fp, "%s", buf);
++        ret = fscanf (fp, "%255s", buf);
+ 
+         while (ret != EOF) {
+                 key = strtok_r (buf, "=", &saveptr);
+                 if (!key) {
+-                        ret = fscanf (fp, "%s", buf);
++                        ret = fscanf (fp, "%255s", buf);
+                         continue;
+                 }
+ 
+                 value = strtok_r (NULL, "=", &saveptr);
+ 
+                 if (!value) {
+-                        ret = fscanf (fp, "%s", buf);
++                        ret = fscanf (fp, "%255s", buf);
+                         continue;
+                 }
+ 

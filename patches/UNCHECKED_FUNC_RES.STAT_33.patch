@@ -1,0 +1,33 @@
+commit c931dd3e4479d4213085a44232f8319a15e39472
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 13:59:40 2021 +0300
+
+    patch80
+
+diff --git a/xlators/features/snapview-client/src/snapview-client.c b/xlators/features/snapview-client/src/snapview-client.c
+index d9bd568..093bbc8 100644
+--- a/xlators/features/snapview-client/src/snapview-client.c
++++ b/xlators/features/snapview-client/src/snapview-client.c
+@@ -356,16 +356,22 @@ gf_svc_lookup (call_frame_t *frame, xlator_t *this, loc_t *loc, dict_t *xdata)
+         priv = this->private;
+ 
+         ret = svc_inode_ctx_get (this, loc->inode, &inode_type);
++        if (ret)
++                goto out;
+         if (!__is_root_gfid (loc->gfid)) {
+                 if (loc->parent) {
+                         parent = inode_ref (loc->parent);
+                         ret = svc_inode_ctx_get (this, loc->parent,
+                                                  &parent_type);
++                        if (ret)
++                                goto out;
+                 } else {
+                         parent = inode_parent (loc->inode, loc->pargfid, NULL);
+                         if (parent)
+                                 ret = svc_inode_ctx_get (this, parent,
+                                                          &parent_type);
++                        if (ret)
++                                goto out;
+                 }
+         }
+ 

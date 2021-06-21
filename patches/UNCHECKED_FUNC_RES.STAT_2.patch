@@ -1,0 +1,19 @@
+commit e9849674b51b07b0585cb4d67ad92ba8ba2d18a1
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue May 11 15:44:56 2021 +0300
+
+    patch49
+
+diff --git a/xlators/storage/bd/src/bd.c b/xlators/storage/bd/src/bd.c
+index 07b7ecd..17c959b 100644
+--- a/xlators/storage/bd/src/bd.c
++++ b/xlators/storage/bd/src/bd.c
+@@ -2025,7 +2025,7 @@ out:
+                 BD_STACK_UNWIND (fgetxattr, frame, op_ret, op_errno, xattr,
+                                  xdata);
+ 
+-        op_ret = dict_reset (xattr);
++        dict_reset (xattr);
+         dict_unref (xattr);
+ 
+         return 0;

@@ -1,0 +1,19 @@
+commit 7126b147df9a578af83550de139fe83f8877f30c
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon May 17 17:49:26 2021 +0300
+
+    patch105
+
+diff --git a/cli/src/cli-cmd-parser.c b/cli/src/cli-cmd-parser.c
+index 6d4aad0..be584f8 100644
+--- a/cli/src/cli-cmd-parser.c
++++ b/cli/src/cli-cmd-parser.c
+@@ -1427,7 +1427,7 @@ cli_add_key_group (dict_t *dict, char *key, char *value, char **op_errstr)
+ 
+         opt_count = 0;
+         buf = line;
+-        while (fscanf (fp, "%s", buf) != EOF) {
++        while (fscanf (fp, "%4351s", buf) != EOF) {
+ 
+                 opt_count++;
+                 tok_key = strtok_r (line, "=", &saveptr);

@@ -1,0 +1,19 @@
+commit d4c64c44f372824f542ab37dbbfda99a1d99d3fa
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 20:27:57 2021 +0300
+
+    patch84
+
+diff --git a/cli/src/cli-cmd-parser.c b/cli/src/cli-cmd-parser.c
+index ebe41d2..6d4aad0 100644
+--- a/cli/src/cli-cmd-parser.c
++++ b/cli/src/cli-cmd-parser.c
+@@ -1545,7 +1545,7 @@ cli_cmd_volume_set_parse (struct cli_state *state, const char **words,
+         } else if (wordcount == 5  && cli_is_key_spl ((char *)words[3])) {
+                 key = (char *) words[3];
+                 value = (char *) words[4];
+-                if ( !key || !value) {
++                if (!value) {
+                         ret = -1;
+                         goto out;
+                 }

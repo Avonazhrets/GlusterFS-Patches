@@ -1,0 +1,19 @@
+commit deeb2fb0f7c2db9656cc86105cfc8686e663ae38
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue Apr 27 15:45:36 2021 +0300
+
+    patch36
+
+diff --git a/xlators/storage/posix/src/posix.c b/xlators/storage/posix/src/posix.c
+index d858878..92c22be 100644
+--- a/xlators/storage/posix/src/posix.c
++++ b/xlators/storage/posix/src/posix.c
+@@ -1099,7 +1099,7 @@ posix_ipc (call_frame_t *frame, xlator_t *this, int32_t op, dict_t *xdata)
+          */
+         gf_msg (this->name, GF_LOG_ERROR, 0, P_MSG_IPC_NOT_HANDLE,
+                 "GF_LOG_IPC(%d) not handled", op);
+-        STACK_UNWIND_STRICT (ipc, frame, -1, -EOPNOTSUPP, NULL);
++        STACK_UNWIND_STRICT (ipc, frame, -1, EOPNOTSUPP, NULL);
+         return 0;
+ 
+ }

@@ -1,0 +1,32 @@
+commit e6189752dc61983aabbbec7d7fcf942437373d2e
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon Apr 26 14:24:57 2021 +0300
+
+    patch31
+
+diff --git a/xlators/encryption/crypt/src/crypt.c b/xlators/encryption/crypt/src/crypt.c
+index e743aff..8b2216b 100644
+--- a/xlators/encryption/crypt/src/crypt.c
++++ b/xlators/encryption/crypt/src/crypt.c
+@@ -2571,17 +2571,19 @@ static int32_t crypt_create(call_frame_t *frame,
+ 				  CRYPTO_FORMAT_PREFIX,
+ 				  local->format,
+ 				  new_format_size());
+-	if (ret) {
++	if (ret < 0) {
+ 		dict_unref(local->xattr);
+ 		free_inode_info(info);
+ 		free_format(local);
++		ret = EINVAL;
+ 		goto error;
+ 	}
+ 	ret = dict_set(local->xattr, FSIZE_XATTR_PREFIX, data_from_uint64(0));
+-	if (ret) {
++	if (ret < 0) {
+ 		dict_unref(local->xattr);
+ 		free_inode_info(info);
+ 		free_format(local);
++		ret = EINVAL;
+ 		goto error;
+ 	}
+ 	local->fd = fd_ref(fd);

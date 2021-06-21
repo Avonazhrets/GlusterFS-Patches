@@ -1,0 +1,24 @@
+commit daf3e732fa3b6f097777557034cd9ae32a33e7c4
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 13:27:33 2021 +0300
+
+    patch77
+
+diff --git a/xlators/storage/posix/src/posix-handle.c b/xlators/storage/posix/src/posix-handle.c
+index d480853..36ad914 100644
+--- a/xlators/storage/posix/src/posix-handle.c
++++ b/xlators/storage/posix/src/posix-handle.c
+@@ -545,7 +545,12 @@ posix_handle_init (xlator_t *this)
+                 break;
+         }
+ 
+-        sys_stat (handle_pfx, &priv->handledir);
++        ret = sys_stat (handle_pfx, &priv->handledir);
++        if (ret) {
++                gf_msg(this->name, GF_LOG_ERROR, errno, P_MSG_HANDLE_CREATE,
++                "stat for %s failed", handle_pfx);
++                return -1;
++        }
+ 
+         MAKE_HANDLE_ABSPATH(rootstr, this, gfid);
+ 

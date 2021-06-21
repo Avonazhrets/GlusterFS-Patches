@@ -1,0 +1,25 @@
+commit 6d99ec73f117d89f367d86f110f7980a915630c9
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Fri May 14 21:12:22 2021 +0300
+
+    patch72
+
+diff --git a/xlators/performance/io-threads/src/io-threads.c b/xlators/performance/io-threads/src/io-threads.c
+index 7c020e2..e9d19d6 100644
+--- a/xlators/performance/io-threads/src/io-threads.c
++++ b/xlators/performance/io-threads/src/io-threads.c
+@@ -855,7 +855,13 @@ set_stack_size (iot_conf_t *conf)
+ 
+         this = THIS;
+ 
+-        pthread_attr_init (&conf->w_attr);
++        err = pthread_attr_init(&conf->w_attr);
++        if (err != 0) {
++                gf_msg(this->name, GF_LOG_ERROR, err, IO_THREADS_MSG_INIT_FAILED,
++                        "Failed to initialize thread attributes object.");
++                return;
++        }
++
+         err = pthread_attr_setstacksize (&conf->w_attr, stacksize);
+         if (err == EINVAL) {
+                 err = pthread_attr_getstacksize (&conf->w_attr, &stacksize);

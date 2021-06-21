@@ -1,0 +1,52 @@
+commit 5fa05616d9ecf7312c893a6a936aeaf8033f21d9
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon Apr 26 14:17:19 2021 +0300
+
+    patch30
+
+diff --git a/xlators/cluster/dht/src/dht-common.c b/xlators/cluster/dht/src/dht-common.c
+index 46d683c..7e69df2 100644
+--- a/xlators/cluster/dht/src/dht-common.c
++++ b/xlators/cluster/dht/src/dht-common.c
+@@ -7376,8 +7376,6 @@ dht_mkdir_helper (call_frame_t *frame, xlator_t *this,
+                         "mkdir (%s/%s) (path: %s): refreshing parent layout "
+                         "failed.", pgfid, loc->name,
+                         loc->path);
+-
+-                op_errno = local->op_errno;
+                 goto err;
+         }
+ 
+@@ -7388,7 +7386,7 @@ dht_mkdir_helper (call_frame_t *frame, xlator_t *this,
+                 gf_msg_debug (this->name, 0,
+                               "mkdir (%s/%s) (path: %s): hashed subvol not "
+                               "found", pgfid, loc->name, loc->path);
+-                op_errno = ENOENT;
++                local->op_errno = ENOENT;
+                 goto err;
+         }
+ 
+@@ -7417,7 +7415,7 @@ dht_mkdir_helper (call_frame_t *frame, xlator_t *this,
+                         "previous attempt of mkdir failed because of "
+                         "in-memory layout not matching with that on disk.",
+                         pgfid, loc->name, loc->path);
+-                op_errno = EIO;
++                local->op_errno = EIO;
+                 goto err;
+         }
+ 
+diff --git a/xlators/encryption/crypt/src/crypt.c b/xlators/encryption/crypt/src/crypt.c
+index 0dd076b..e743aff 100644
+--- a/xlators/encryption/crypt/src/crypt.c
++++ b/xlators/encryption/crypt/src/crypt.c
+@@ -2186,8 +2186,9 @@ static int32_t crypt_open(call_frame_t *frame,
+ 	}
+ 	memset(local->loc, 0, sizeof(*local->loc));
+ 	ret = loc_copy(local->loc, loc);
+-	if (ret) {
++	if (ret < 0) {
+ 		GF_FREE(local->loc);
++		ret = EINVAL;
+ 		goto error;
+ 	}
+ 	local->fd = fd_ref(fd);

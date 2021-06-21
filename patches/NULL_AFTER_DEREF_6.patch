@@ -1,0 +1,37 @@
+commit 71aa2ee1b4ee1a835a851b535bd55696a90ea8da
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 20:52:22 2021 +0300
+
+    patch88
+
+diff --git a/xlators/protocol/client/src/client-rpc-fops.c b/xlators/protocol/client/src/client-rpc-fops.c
+index 973a795..10fef66 100644
+--- a/xlators/protocol/client/src/client-rpc-fops.c
++++ b/xlators/protocol/client/src/client-rpc-fops.c
+@@ -6022,7 +6022,7 @@ int32_t
+ client3_3_compound (call_frame_t *frame, xlator_t *this, void *data)
+ {
+         clnt_conf_t             *conf              = NULL;
+-        compound_args_t         *c_args            = data;
++        compound_args_t         *c_args            = NULL;
+         gfs3_compound_req       req                = {0,};
+         clnt_local_t            *local             = NULL;
+         int                     op_errno           = ENOMEM;
+@@ -6039,13 +6039,16 @@ client3_3_compound (call_frame_t *frame, xlator_t *this, void *data)
+         struct iobuf            *rsphdr_iobuf       = NULL;
+         int                     rsphdr_count        = 0;
+         int                     req_count           = 0;
+-        dict_t                  *xdata              = c_args->xdata;
++        dict_t                  *xdata              = NULL;
+ 
+         GF_ASSERT (frame);
+ 
+         if (!this || !data)
+                 goto unwind;
+ 
++        c_args = data;
++        xdata = c_args->xdata;
++
+         memset (req_vector, 0, sizeof (req_vector));
+         memset (rsp_vector, 0, sizeof (rsp_vector));
+ 

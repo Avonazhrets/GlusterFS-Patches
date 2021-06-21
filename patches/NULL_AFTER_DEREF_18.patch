@@ -1,0 +1,28 @@
+commit b9eed847fd5a206320a6af171c7f1fec586ea612
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 22:55:28 2021 +0300
+
+    patch100
+
+diff --git a/xlators/debug/io-stats/src/io-stats.c b/xlators/debug/io-stats/src/io-stats.c
+index a46d116..5844829 100644
+--- a/xlators/debug/io-stats/src/io-stats.c
++++ b/xlators/debug/io-stats/src/io-stats.c
+@@ -746,7 +746,7 @@ _io_stats_get_key_prefix (xlator_t *this, char **key_prefix) {
+                         strlen (instance_name) + 3;
+                 *key_prefix = GF_CALLOC (key_len, sizeof (char),
+                         gf_common_mt_char);
+-                if (!key_prefix) {
++                if (!*key_prefix) {
+                         ret = -ENOMEM;
+                         goto err;
+                 }
+@@ -761,7 +761,7 @@ _io_stats_get_key_prefix (xlator_t *this, char **key_prefix) {
+                 key_len = strlen (key_root) + strlen (xlator_name) + 2;
+                 *key_prefix = GF_CALLOC (key_len, sizeof (char),
+                         gf_common_mt_char);
+-                if (!key_prefix) {
++                if (!*key_prefix) {
+                         ret = -ENOMEM;
+                         goto err;
+                 }

@@ -1,0 +1,52 @@
+commit 60d0dcfd15da447eb95c1269bdca6c0121d0caed
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 13:18:05 2021 +0300
+
+    patch76
+
+diff --git a/xlators/meta/src/meta-helpers.c b/xlators/meta/src/meta-helpers.c
+index e681af5..830352e 100644
+--- a/xlators/meta/src/meta-helpers.c
++++ b/xlators/meta/src/meta-helpers.c
+@@ -23,18 +23,17 @@ meta_fd_get (fd_t *fd, xlator_t *this)
+ 
+ 	LOCK (&fd->lock);
+ 	{
+-		__fd_ctx_get (fd, this, &value);
+-		if (!value) {
+-			meta_fd = GF_CALLOC (1, sizeof (*meta_fd),
+-					     gf_meta_mt_fd_t);
+-			if (!meta_fd)
+-				goto unlock;
+-
+-			value = (long) meta_fd;
+-			__fd_ctx_set (fd, this, value);
++		if (__fd_ctx_get (fd, this, &value) < 0) {
++			if (!value) {
++				meta_fd = GF_CALLOC(1, sizeof(*meta_fd), gf_meta_mt_fd_t);
++				if (!meta_fd)
++					goto unlock;
++				value = (long) meta_fd;
++				__fd_ctx_set (fd, this, value);
++			}
++		} else {
++			meta_fd = (void *) value;
+ 		}
+-
+-		meta_fd = (void *) value;
+ 	}
+ unlock:
+ 	UNLOCK (&fd->lock);
+diff --git a/xlators/mount/fuse/src/fuse-bridge.c b/xlators/mount/fuse/src/fuse-bridge.c
+index 34a0dbb..a2d95d2 100644
+--- a/xlators/mount/fuse/src/fuse-bridge.c
++++ b/xlators/mount/fuse/src/fuse-bridge.c
+@@ -70,6 +70,8 @@ __fuse_fd_ctx_check_n_create (xlator_t *this, fd_t *fd)
+         fuse_fd_ctx_t *fd_ctx = NULL;
+ 
+         ret = __fd_ctx_get (fd, this, &val);
++        if (ret == 0)
++                goto out;
+ 
+         fd_ctx = (fuse_fd_ctx_t *)(unsigned long) val;
+ 

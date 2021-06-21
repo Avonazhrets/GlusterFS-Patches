@@ -1,0 +1,18 @@
+commit f29bd0159ea5fa6dddc49e5a9523dfbed5459e4e
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue Apr 27 15:28:42 2021 +0300
+
+    patch35
+
+diff --git a/xlators/performance/io-cache/src/io-cache.c b/xlators/performance/io-cache/src/io-cache.c
+index 8963942..980ff1b 100644
+--- a/xlators/performance/io-cache/src/io-cache.c
++++ b/xlators/performance/io-cache/src/io-cache.c
+@@ -1110,6 +1110,7 @@ ioc_readv (call_frame_t *frame, xlator_t *this, fd_t *fd,
+         int32_t      op_errno      = -1;
+ 
+         if (!this) {
++                op_errno = EINVAL;
+                 goto out;
+         }
+ 

@@ -1,0 +1,40 @@
+commit 98607131e88243985fc6e73b8d87ce9574e5983a
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue May 11 16:39:09 2021 +0300
+
+    patch52
+
+diff --git a/cli/src/cli-rpc-ops.c b/cli/src/cli-rpc-ops.c
+index 96f292e..6b565c7 100644
+--- a/cli/src/cli-rpc-ops.c
++++ b/cli/src/cli-rpc-ops.c
+@@ -3548,12 +3548,19 @@ print_quota_list_output (cli_local_t *local, char *path, char *default_sl,
+         if (limit_set) {
+                 if (limits->sl < 0) {
+                         ret = gf_string2percent (default_sl, &sl_num);
++                        if (ret) {
++                                gf_log("cli", GF_LOG_ERROR,
++                                "could not convert default soft limit to percent");
++                                goto out;
++                        }
+                         sl_num = (sl_num * limits->hl) / 100;
+                         sl_final = default_sl;
+                 } else {
+                         sl_num = (limits->sl * limits->hl) / 100;
+-                        snprintf (percent_str, sizeof (percent_str), "%"PRIu64"%%",
++                        ret = snprintf (percent_str, sizeof (percent_str), "%"PRIu64"%%",
+                                         limits->sl);
++                        if (ret < 0)
++                                goto out;
+                         sl_final = percent_str;
+                 }
+                 if (type == GF_QUOTA_OPTION_TYPE_LIST)
+@@ -3584,7 +3591,7 @@ print_quota_list_output (cli_local_t *local, char *path, char *default_sl,
+                                                       sl_final, limits,
+                                                       used_space, sl, hl,
+                                                       sl_num, limit_set);
+-
++out:
+         return ret;
+ }
+ 

@@ -1,0 +1,25 @@
+commit 852ac69bc169a1a9adfe99bd8d12fbc44baa66c6
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Fri May 14 20:36:51 2021 +0300
+
+    patch68
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-volgen.c b/xlators/mgmt/glusterd/src/glusterd-volgen.c
+index 97049ac..68c7df9 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-volgen.c
++++ b/xlators/mgmt/glusterd/src/glusterd-volgen.c
+@@ -1519,9 +1519,12 @@ brick_graph_add_posix (volgen_graph_t *graph, glusterd_volinfo_t *volinfo,
+         if (ret)
+                 goto out;
+ 
+-        if (quota_enabled || pgfid_feat || trash_enabled)
+-                xlator_set_option (xl, "update-link-count-parent",
++        if (quota_enabled || pgfid_feat || trash_enabled) {
++                ret = xlator_set_option (xl, "update-link-count-parent",
+                                    "on");
++                if (ret)
++                        goto out;
++        }
+ 
+         snprintf (tmpstr, sizeof (tmpstr), "%d", brickinfo->fs_share_count);
+         ret = xlator_set_option (xl, "shared-brick-count", tmpstr);

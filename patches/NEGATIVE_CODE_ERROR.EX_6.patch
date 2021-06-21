@@ -1,0 +1,22 @@
+commit 91a75c88416b4e3289eae1b91700476be8bf03aa
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon Apr 26 14:55:39 2021 +0300
+
+    patch33
+
+diff --git a/xlators/cluster/ec/src/ec-heal.c b/xlators/cluster/ec/src/ec-heal.c
+index a6de3ee..3e9ef8a 100644
+--- a/xlators/cluster/ec/src/ec-heal.c
++++ b/xlators/cluster/ec/src/ec-heal.c
+@@ -2136,6 +2136,11 @@ __ec_fd_data_adjust_versions (call_frame_t *frame, ec_t *ec, fd_t *fd,
+                 }
+         }
+ 
++        if (source == -1) {
++                op_ret = -ENOTCONN;
++                goto out;
++        }
++
+         for (i = 0; i < ec->nodes; i++) {
+                 if (healed_sinks[i]) {
+                         ret = ec_data_undo_pending (frame, ec, fd, xattr,

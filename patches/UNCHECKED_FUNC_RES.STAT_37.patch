@@ -1,0 +1,23 @@
+commit c0dc9de6d2d8714a918d3260ef6a1954fff651ff
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sun May 30 15:43:40 2021 +0300
+
+    patch130
+
+diff --git a/xlators/storage/bd/src/bd-helper.c b/xlators/storage/bd/src/bd-helper.c
+index 15f83d3..eb179b5 100644
+--- a/xlators/storage/bd/src/bd-helper.c
++++ b/xlators/storage/bd/src/bd-helper.c
+@@ -903,7 +903,11 @@ bd_do_ioctl_zerofill (bd_priv_t *priv, bd_attr_t *bdatt, int fd, char *vg,
+         uuid_utoa_r (bdatt->iatt.ia_gfid, uuid);
+         sprintf (lvname, "/dev/%s/%s", vg, uuid);
+ 
+-        sys_readlink (lvname, dmname, sizeof (dmname) - 1);
++        if (sys_readlink (lvname, dmname, sizeof (dmname) - 1) == -1) {
++                gf_log ("bd_do_ioctl_zerofill", GF_LOG_DEBUG,
++                        "could not read the link", lvname);
++                goto skip;
++        }
+ 
+         p = strrchr (dmname, '/');
+         if (p)

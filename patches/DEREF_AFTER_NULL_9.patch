@@ -1,0 +1,19 @@
+commit cbd325d617d7a5a9f7cebe733798ef635e70a952
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed Apr 14 17:37:20 2021 +0300
+
+    patch10
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-rpc-ops.c b/xlators/mgmt/glusterd/src/glusterd-rpc-ops.c
+index ab52e8d..5dad9d0 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-rpc-ops.c
++++ b/xlators/mgmt/glusterd/src/glusterd-rpc-ops.c
+@@ -1839,7 +1839,7 @@ glusterd_mgmt_v3_lock_peers (call_frame_t *frame, xlator_t *this,
+                                        this, glusterd_mgmt_v3_lock_peers_cbk,
+                                        (xdrproc_t)xdr_gd1_mgmt_v3_lock_req);
+ out:
+-        gf_msg_debug (this->name, 0, "Returning %d", ret);
++        gf_msg_debug (this ? this->name : "glusterd-rpc-ops", 0, "Returning %d", ret);
+         if (dict)
+                 dict_unref (dict);
+         if (req.dict.dict_val)

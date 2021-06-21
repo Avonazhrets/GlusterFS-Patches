@@ -1,0 +1,20 @@
+commit 67f32962c2bd9d775851c40f79fce32a454259b8
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 21:56:29 2021 +0300
+
+    patch91
+
+diff --git a/api/src/glfs.c b/api/src/glfs.c
+index 8369546..43eac72 100644
+--- a/api/src/glfs.c
++++ b/api/src/glfs.c
+@@ -1151,9 +1151,6 @@ pub_glfs_fini (struct glfs *fs)
+         __GLFS_ENTRY_VALIDATE_FS (fs, invalid_fs);
+ 
+         ctx = fs->ctx;
+-        if (!ctx) {
+-                goto free_fs;
+-        }
+ 
+         if (ctx->mgmt) {
+                 rpc_clnt_disable (ctx->mgmt);

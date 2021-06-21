@@ -1,0 +1,40 @@
+commit 13160a2c16732b42d4eaaf808c9f3cc61c1ef3e7
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 21:02:49 2021 +0300
+
+    patch89
+
+diff --git a/libglusterfs/src/common-utils.c b/libglusterfs/src/common-utils.c
+index 772f4e0..9771dff 100644
+--- a/libglusterfs/src/common-utils.c
++++ b/libglusterfs/src/common-utils.c
+@@ -488,22 +488,16 @@ gf_rev_dns_lookup_cached (const char *ip, struct dnscache *dnscache)
+         from_cache = _gf_false;
+ out:
+         /* Insert into the cache */
+-        if (fqdn && !from_cache) {
++        if (fqdn && !from_cache && ip) {
+                 struct dnscache_entry *entry = gf_dnscache_entry_init ();
+ 
+-                if (!entry) {
+-                        goto out;
+-                }
+-                entry->fqdn = fqdn;
+-                entry->ip = gf_strdup (ip);
+-                if (!ip) {
+-                        gf_dnscache_entry_deinit (entry);
+-                        goto out;
++                if (entry) {
++                        entry->fqdn = fqdn;
++                        entry->ip = gf_strdup (ip);
++                        entry->timestamp = time (NULL);
++                        entrydata = bin_to_data (entry, sizeof (*entry));
++                        dict_set (cache, (char *)ip, entrydata);
+                 }
+-                entry->timestamp = time (NULL);
+-
+-                entrydata = bin_to_data (entry, sizeof (*entry));
+-                dict_set (cache, (char *)ip, entrydata);
+         }
+         return fqdn;
+ }

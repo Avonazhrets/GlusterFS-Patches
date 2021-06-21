@@ -1,0 +1,27 @@
+commit 11e88d4de996b65c805bed3b48c1161b1390f4e5
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Fri May 14 00:16:09 2021 +0300
+
+    patch60
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-log-ops.c b/xlators/mgmt/glusterd/src/glusterd-log-ops.c
+index d04492a..6f7c0ba 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-log-ops.c
++++ b/xlators/mgmt/glusterd/src/glusterd-log-ops.c
+@@ -116,15 +116,13 @@ glusterd_op_stage_log_rotate (dict_t *dict, char **op_errstr)
+                 goto out;
+         }
+ 
+-        exists = glusterd_check_volume_exists (volname);
+         ret = glusterd_volinfo_find (volname, &volinfo);
+-        if (!exists) {
++        if (ret) {
+                 snprintf (msg, sizeof (msg), "Volume %s does not exist",
+                           volname);
+                 gf_msg ("glusterd", GF_LOG_ERROR, 0,
+                         GD_MSG_VOL_NOT_FOUND, "%s", msg);
+                 *op_errstr = gf_strdup (msg);
+-                ret = -1;
+                 goto out;
+         }
+ 

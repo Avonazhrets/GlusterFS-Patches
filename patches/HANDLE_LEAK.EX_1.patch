@@ -1,0 +1,18 @@
+commit 60c432d75bfaaaec4b6292fc7f38508fd0cee212
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 29 15:35:08 2021 +0300
+
+    patch122
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-volume-ops.c b/xlators/mgmt/glusterd/src/glusterd-volume-ops.c
+index dbc4b2b..29b287b 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-volume-ops.c
++++ b/xlators/mgmt/glusterd/src/glusterd-volume-ops.c
+@@ -197,6 +197,7 @@ glusterd_check_brick_order(dict_t *dict, char *err_str)
+                         gf_msg (this->name, GF_LOG_ERROR, ENOMEM,
+                                 GD_MSG_NO_MEMORY, "failed to allocate "
+                                 "memory");
++                        freeaddrinfo(ai_info);
+                         goto out;
+                 }
+                 ai_list_tmp1->info = ai_info;

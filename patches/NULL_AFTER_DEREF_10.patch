@@ -1,0 +1,19 @@
+commit 73f24d32682c0795b79d2ce7463388c2b05ae235
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 22:03:15 2021 +0300
+
+    patch92
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-geo-rep.c b/xlators/mgmt/glusterd/src/glusterd-geo-rep.c
+index 261bf86..40f87da 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-geo-rep.c
++++ b/xlators/mgmt/glusterd/src/glusterd-geo-rep.c
+@@ -2760,7 +2760,7 @@ glusterd_verify_slave (char *volname, char *slave_url, char *slave_vol,
+                 /* Tokenize the error message from gverify.sh to figure out
+                  * if the error is a force blocker or not. */
+                 tmp = strtok_r (buf, "|", &save_ptr);
+-                if (!strcmp (tmp, "FORCE_BLOCKER"))
++                if (tmp && !strcmp (tmp, "FORCE_BLOCKER"))
+                         *is_force_blocker = 1;
+                 else {
+                         /* No FORCE_BLOCKER flag present so all that is

@@ -1,0 +1,23 @@
+commit 7968272e7994f8e1ede7525b79e47bfb8338b627
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed Apr 28 12:14:20 2021 +0300
+
+    patch45
+
+diff --git a/xlators/storage/posix/src/posix-handle.c b/xlators/storage/posix/src/posix-handle.c
+index 38e3198..d480853 100644
+--- a/xlators/storage/posix/src/posix-handle.c
++++ b/xlators/storage/posix/src/posix-handle.c
+@@ -131,10 +131,10 @@ posix_make_ancestryfromgfid (xlator_t *this, char *path, int pathsize,
+         struct iatt  iabuf      = {0, };
+         int          ret        = -1;
+         uuid_t       tmp_gfid   = {0, };
+-        char        *dir_stack[PATH_MAX/2]; /* Since PATH_MAX/2 also gives
++        char        *dir_stack[PATH_MAX/2 + 1]; /* Since PATH_MAX/2 also gives
+                                             an upper bound on depth of
+                                             directories tree */
+-        uuid_t       gfid_stack[PATH_MAX/2];
++        uuid_t       gfid_stack[PATH_MAX/2 + 1];
+ 
+         char        *dir_name   = NULL;
+         char        *saved_dir  = NULL;

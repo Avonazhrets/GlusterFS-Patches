@@ -1,0 +1,46 @@
+commit 3797979b7f60b64a1e3237394a796849835fd025
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Fri May 14 13:38:28 2021 +0300
+
+    patch63
+
+diff --git a/cli/src/cli-cmd-parser.c b/cli/src/cli-cmd-parser.c
+index c8ed367..ebe41d2 100644
+--- a/cli/src/cli-cmd-parser.c
++++ b/cli/src/cli-cmd-parser.c
+@@ -3913,6 +3913,9 @@ cli_cmd_volume_heal_options_parse (const char **words, int wordcount,
+                     !strcmp (words[4], "source-brick")) {
+                         ret = dict_set_int32 (dict, "heal-op",
+                                               GF_SHD_OP_SBRAIN_HEAL_FROM_BRICK);
++                        if (ret)
++                                goto out;
++
+                         ret = set_hostname_path_in_dict (words[5], dict,
+                                               GF_SHD_OP_SBRAIN_HEAL_FROM_BRICK);
+                         if (ret)
+diff --git a/xlators/mgmt/glusterd/src/glusterd-op-sm.c b/xlators/mgmt/glusterd/src/glusterd-op-sm.c
+index 6f96834..0b9f05f 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-op-sm.c
++++ b/xlators/mgmt/glusterd/src/glusterd-op-sm.c
+@@ -602,6 +602,8 @@ glusterd_brick_op_build_payload (glusterd_op_t op, glusterd_brickinfo_t *brickin
+                 if (ret)
+                         goto out;
+                 ret = dict_set_int32 (dict, "xl-op", heal_op);
++                if (ret)
++                        goto out;
+         }
+                 break;
+         case GD_OP_STATUS_VOLUME:
+diff --git a/xlators/mgmt/glusterd/src/glusterd-utils.c b/xlators/mgmt/glusterd/src/glusterd-utils.c
+index e38f963..e464381 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-utils.c
++++ b/xlators/mgmt/glusterd/src/glusterd-utils.c
+@@ -3145,6 +3145,8 @@ glusterd_add_volume_to_dict (glusterd_volinfo_t *volinfo,
+         memset (key, 0 ,sizeof (key));
+         snprintf (key, sizeof (key), "%s%d.caps", prefix, count);
+         ret = dict_set_int32 (dict, key, volinfo->caps);
++        if (ret)
++                goto out;
+ 
+         memset (key, 0, sizeof (key));
+         snprintf (key, sizeof (key), "%s%d.quota-xattr-version", prefix, count);

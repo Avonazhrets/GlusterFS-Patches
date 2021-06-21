@@ -1,0 +1,18 @@
+commit 07f9a7b97c7e95f97b4b249861023a342d33cd6a
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue Apr 27 16:06:22 2021 +0300
+
+    patch40
+
+diff --git a/xlators/features/upcall/src/upcall.c b/xlators/features/upcall/src/upcall.c
+index 6540f4e..34f7fe3 100644
+--- a/xlators/features/upcall/src/upcall.c
++++ b/xlators/features/upcall/src/upcall.c
+@@ -2228,6 +2228,7 @@ up_fxattrop (call_frame_t *frame, xlator_t *this, fd_t *fd,
+ 
+         ret = up_filter_xattr (local->xattr, priv->xattrs);
+         if (ret < 0) {
++                op_errno = ENOMEM;
+                 goto err;
+         }
+ 

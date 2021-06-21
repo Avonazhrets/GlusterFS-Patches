@@ -1,0 +1,21 @@
+commit b76b0c0d02c471b5ccfb9b1ce1aacf7a9c140cd7
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 13:33:34 2021 +0300
+
+    patch78
+
+diff --git a/xlators/cluster/afr/src/afr-self-heald.c b/xlators/cluster/afr/src/afr-self-heald.c
+index 74c9bb6..a90d85b 100644
+--- a/xlators/cluster/afr/src/afr-self-heald.c
++++ b/xlators/cluster/afr/src/afr-self-heald.c
+@@ -1192,6 +1192,10 @@ afr_xl_op (xlator_t *this, dict_t *input, dict_t *output)
+ 				ret = afr_shd_get_index_count (this, i, &cnt);
+ 				if (ret == 0) {
+ 					ret = dict_set_uint64 (output, key, cnt);
++					if (ret) {
++                        gf_smsg(this->name, GF_LOG_ERROR, -ret,
++                                AFR_MSG_DICT_SET_FAILED, NULL);
++                    }
+ 				}
+ 				op_ret = 0;
+ 			}

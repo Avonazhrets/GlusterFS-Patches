@@ -1,0 +1,19 @@
+commit ef76dfabfa8638f4a2f51eec52ed58ff934b69f2
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Mon Apr 12 16:09:37 2021 +0300
+
+    DEREF_OF_NULL
+
+diff --git a/xlators/features/changetimerecorder/src/ctr-xlator-ctx.c b/xlators/features/changetimerecorder/src/ctr-xlator-ctx.c
+index 7700ad4..54dfb49 100644
+--- a/xlators/features/changetimerecorder/src/ctr-xlator-ctx.c
++++ b/xlators/features/changetimerecorder/src/ctr-xlator-ctx.c
+@@ -22,7 +22,7 @@ fini_ctr_hard_link (ctr_hard_link_t **ctr_hard_link) {
+ 
+         GF_ASSERT (ctr_hard_link);
+ 
+-        if (*ctr_hard_link)
++        if (*ctr_hard_link  == NULL)
+                 return;
+         GF_FREE ((*ctr_hard_link)->base_name);
+         GF_FREE (*ctr_hard_link);

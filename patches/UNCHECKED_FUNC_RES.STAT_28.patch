@@ -1,0 +1,19 @@
+commit e59aa2b789ced17c74aacc32afba229e130d0b15
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 12:57:43 2021 +0300
+
+    patch75
+
+diff --git a/xlators/features/marker/src/marker.c b/xlators/features/marker/src/marker.c
+index 35d19ed..c47485a 100644
+--- a/xlators/features/marker/src/marker.c
++++ b/xlators/features/marker/src/marker.c
+@@ -3430,7 +3430,7 @@ init (xlator_t *this)
+         if (data)
+                 ret = gf_string2int32 (data->data, &priv->version);
+ 
+-        if (priv->feature_enabled && priv->version < 0) {
++        if ((ret == 0) && priv->feature_enabled && priv->version < 0) {
+                 gf_log (this->name, GF_LOG_ERROR, "Invalid quota version %d",
+                         priv->version);
+                 goto err;

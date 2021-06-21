@@ -1,0 +1,28 @@
+commit 556a2401387a6c22fd1a1b23723d514f33ab0bb6
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed May 19 12:38:06 2021 +0300
+
+    patch116
+
+diff --git a/xlators/cluster/stripe/src/stripe.c b/xlators/cluster/stripe/src/stripe.c
+index f0ec285..a5b7cf5 100644
+--- a/xlators/cluster/stripe/src/stripe.c
++++ b/xlators/cluster/stripe/src/stripe.c
+@@ -5561,7 +5561,7 @@ stripe_getxattr (call_frame_t *frame, xlator_t *this,
+                 }
+ 
+                 local->nallocs = local->wind_count = priv->child_count;
+-                (void) strncpy (local->xsel, name, strlen (name));
++                (void) strncpy (local->xsel, name, sizeof(local->xsel));
+ 
+                 /**
+                  * for xattrs that need info from all childs, fill ->xsel
+@@ -5632,7 +5632,7 @@ stripe_fgetxattr_from_everyone (call_frame_t *frame, xlator_t *this, fd_t *fd,
+         local->op_ret = -1;
+         frame->local = local;
+ 
+-        strncpy (local->xsel, name, strlen (name));
++        strncpy (local->xsel, name, sizeof(local->xsel));
+         local->nallocs = local->wind_count = priv->child_count;
+ 
+         for (i = 0, trav = this->children; i < priv->child_count; i++,

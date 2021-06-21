@@ -1,0 +1,36 @@
+commit e5db1bbd9ebbbe53e8e00c79b1bbad38d86f5e09
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 12:47:14 2021 +0300
+
+    patch73
+
+diff --git a/libglusterfs/src/logging.c b/libglusterfs/src/logging.c
+index 0f238d0..48167b1 100644
+--- a/libglusterfs/src/logging.c
++++ b/libglusterfs/src/logging.c
+@@ -887,8 +887,11 @@ _gf_log_callingfn (const char *domain, const char *file, const char *function,
+                 }
+ 
+                 va_start (ap, fmt);
+-                vasprintf (&str2, fmt, ap);
++                ret = vasprintf (&str2, fmt, ap);
+                 va_end (ap);
++                if (-1 == ret) {
++                        goto out;
++                }
+ 
+                 gf_syslog (priority, "[%s:%d:%s] %s %d-%s: %s",
+                            basename, line, function,
+@@ -2183,8 +2186,11 @@ _gf_log (const char *domain, const char *file, const char *function, int line,
+                 }
+ 
+                 va_start (ap, fmt);
+-                vasprintf (&str2, fmt, ap);
++                ret = vasprintf (&str2, fmt, ap);
+                 va_end (ap);
++                if (-1 == ret) {
++                        goto err;
++                }
+ 
+                 gf_syslog (priority, "[%s:%d:%s] %d-%s: %s",
+                            basename, line, function,

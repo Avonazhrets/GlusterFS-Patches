@@ -1,0 +1,20 @@
+commit 08b65d772be496aa8073ed881cd9618de9e3625e
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 29 13:07:37 2021 +0300
+
+    patch119
+
+diff --git a/xlators/features/bit-rot/src/bitd/bit-rot.c b/xlators/features/bit-rot/src/bitd/bit-rot.c
+index c5b4037..94a8125 100644
+--- a/xlators/features/bit-rot/src/bitd/bit-rot.c
++++ b/xlators/features/bit-rot/src/bitd/bit-rot.c
+@@ -1816,7 +1816,8 @@ br_rate_limit_signer (xlator_t *this, int child_count, int numbricks)
+ #ifdef BR_RATE_LIMIT_SIGNER
+ 
+         double contribution = 0;
+-        contribution = ((double)1 - ((double)child_count / (double)numbricks));
++        if (numbricks)
++                contribution = ((double)1 - ((double)child_count / (double)numbricks));
+         if (contribution == 0)
+                 contribution = 1;
+         spec.rate = BR_HASH_CALC_READ_SIZE * contribution;

@@ -1,0 +1,18 @@
+commit 7c544d78946bcc8f088c2795bd38ebc283449e13
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 20:40:05 2021 +0300
+
+    patch86
+
+diff --git a/cli/src/cli.c b/cli/src/cli.c
+index 18ca5c8..db8cc25 100644
+--- a/cli/src/cli.c
++++ b/cli/src/cli.c
+@@ -510,7 +510,6 @@ int
+ cli_usage_out (const char *usage)
+ {
+         GF_ASSERT (usage);
+-        GF_ASSERT (usage[0] != '\0');
+ 
+         if (!usage || usage[0] == '\0')
+                 return -1;

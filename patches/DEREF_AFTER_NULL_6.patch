@@ -1,0 +1,21 @@
+commit abc2660bf96cc440b7a4e0d16d06799926758619
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed Apr 14 17:05:55 2021 +0300
+
+    patch7
+
+diff --git a/libglusterfs/src/gfdb/gfdb_data_store_helper.c b/libglusterfs/src/gfdb/gfdb_data_store_helper.c
+index 43177ef..1bea4b8 100644
+--- a/libglusterfs/src/gfdb/gfdb_data_store_helper.c
++++ b/libglusterfs/src/gfdb/gfdb_data_store_helper.c
+@@ -458,7 +458,9 @@ out:
+                 gfdb_query_record_free (ret_qrecord);
+                 ret_qrecord = NULL;
+         }
+-        *query_record = ret_qrecord;
++        if (query_record) {
++                *query_record = ret_qrecord;
++        }
+         return ret;
+ }
+ 

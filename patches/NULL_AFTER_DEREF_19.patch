@@ -1,0 +1,19 @@
+commit f5887f9e3656491752905724c53b9fb56aa8d90c
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 22:56:20 2021 +0300
+
+    patch101
+
+diff --git a/libglusterfs/src/logging.c b/libglusterfs/src/logging.c
+index 48167b1..95eace5 100644
+--- a/libglusterfs/src/logging.c
++++ b/libglusterfs/src/logging.c
+@@ -2585,7 +2585,7 @@ _do_slog_format (const char *event, va_list inp, char **msg) {
+         }
+ 
+         *msg = gf_strdup (tmp2);
+-        if (!msg)
++        if (!*msg)
+                 ret = -1;
+ 
+  out:

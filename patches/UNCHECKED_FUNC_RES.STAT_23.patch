@@ -1,0 +1,22 @@
+commit a962ab2cce4fb4f51edd3780ee72e40e23024ebe
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Fri May 14 20:41:47 2021 +0300
+
+    patch70
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-volgen.c b/xlators/mgmt/glusterd/src/glusterd-volgen.c
+index 500c009..127be17 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-volgen.c
++++ b/xlators/mgmt/glusterd/src/glusterd-volgen.c
+@@ -4138,7 +4138,11 @@ volume_volgen_graph_build_clusters_tier (volgen_graph_t *graph,
+                 goto out;
+ 
+         ret = volgen_xlator_link (xl, cxl);
++        if (ret)
++                goto out;
+         ret = volgen_xlator_link (xl, hxl);
++        if (ret)
++                goto out;
+ 
+         st_type = GF_CLUSTER_TYPE_TIER;
+ 

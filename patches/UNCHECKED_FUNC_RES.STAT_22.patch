@@ -1,0 +1,19 @@
+commit c9d721799b8316c8f89f97648a4ae80539855457
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Fri May 14 20:39:56 2021 +0300
+
+    patch69
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-volgen.c b/xlators/mgmt/glusterd/src/glusterd-volgen.c
+index 68c7df9..500c009 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-volgen.c
++++ b/xlators/mgmt/glusterd/src/glusterd-volgen.c
+@@ -4096,7 +4096,7 @@ volume_volgen_graph_build_clusters_tier (volgen_graph_t *graph,
+                                                              ret);
+                         if (ret)
+                                 goto out;
+-                         volgen_link_bricks_from_list_tail (graph,  volinfo,
++                        ret = volgen_link_bricks_from_list_tail (graph,  volinfo,
+                                                            "cluster/distribute",
+                                                            "%s-hot-dht",
+                                                            dist_count,

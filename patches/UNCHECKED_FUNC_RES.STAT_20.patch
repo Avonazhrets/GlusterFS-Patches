@@ -1,0 +1,22 @@
+commit 8b31d3a8fa4ca50681c1481b587636e35826d2fe
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Fri May 14 17:04:00 2021 +0300
+
+    patch67
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-store.c b/xlators/mgmt/glusterd/src/glusterd-store.c
+index 21ed347..efc8341 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-store.c
++++ b/xlators/mgmt/glusterd/src/glusterd-store.c
+@@ -4435,6 +4435,11 @@ glusterd_store_retrieve_peers (xlator_t *this)
+                                    key,
+                                    strlen (GLUSTERD_STORE_KEY_PEER_HOSTNAME))) {
+                                 ret = gd_add_address_to_peer (peerinfo, value);
++                                if (ret) {
++                                        gf_msg(this->name, GF_LOG_ERROR, 0,
++                                                GD_MSG_ADD_ADDRESS_TO_PEER_FAIL,
++                                                "Could not add address to peer");
++                                }
+                         } else {
+                                 gf_msg (this->name, GF_LOG_ERROR, 0,
+                                         GD_MSG_UNKNOWN_KEY, "Unknown key: %s",

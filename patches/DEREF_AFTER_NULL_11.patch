@@ -1,0 +1,19 @@
+commit 566cd4e31284be2d92544ec5be1b19825d4d9dbd
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sun Apr 18 17:33:49 2021 +0300
+
+    patch12
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-tier.c b/xlators/mgmt/glusterd/src/glusterd-tier.c
+index 45f6ac3..393d35b 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-tier.c
++++ b/xlators/mgmt/glusterd/src/glusterd-tier.c
+@@ -1268,7 +1268,7 @@ out:
+         if ((rsp.op_errstr) && (strcmp (rsp.op_errstr, "") != 0))
+                 free (rsp.op_errstr);
+         free (rsp.output.output_val);
+-        if (req->rpc_status != -1)
++        if (req && req->rpc_status != -1)
+                 GLUSTERD_STACK_DESTROY(frame);
+         __wake (args);
+ 

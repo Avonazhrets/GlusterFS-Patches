@@ -1,0 +1,26 @@
+commit f6d0495604f6a9f2fb0351b88a020151ab75cde3
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 22:22:17 2021 +0300
+
+    patch96
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-volgen.c b/xlators/mgmt/glusterd/src/glusterd-volgen.c
+index e1de0ad..9c9611e 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-volgen.c
++++ b/xlators/mgmt/glusterd/src/glusterd-volgen.c
+@@ -2783,7 +2783,6 @@ init_sethelp_xml_doc (xmlTextWriterPtr *writer, xmlBufferPtr  *buf)
+ {
+         int ret;
+ 
+-        *buf = xmlBufferCreateSize (8192);
+         if (buf == NULL) {
+                 gf_msg ("glusterd", GF_LOG_ERROR, ENOMEM,
+                         GD_MSG_NO_MEMORY, "Error creating the xml "
+@@ -2791,6 +2790,7 @@ init_sethelp_xml_doc (xmlTextWriterPtr *writer, xmlBufferPtr  *buf)
+                 ret = -1;
+                 goto out;
+         }
++        *buf = xmlBufferCreateSize (8192);
+ 
+         xmlBufferSetAllocationScheme (*buf,XML_BUFFER_ALLOC_DOUBLEIT);
+ 

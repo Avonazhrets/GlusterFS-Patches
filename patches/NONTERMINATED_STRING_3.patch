@@ -1,0 +1,46 @@
+commit 55a6a6f34531a3f0a5a89bfb0df5ac146da7414f
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue Apr 27 22:17:39 2021 +0300
+
+    patch43
+
+diff --git a/xlators/cluster/dht/src/dht-common.c b/xlators/cluster/dht/src/dht-common.c
+index 7e69df2..09db9f0 100644
+--- a/xlators/cluster/dht/src/dht-common.c
++++ b/xlators/cluster/dht/src/dht-common.c
+@@ -3598,7 +3598,7 @@ dht_getxattr (call_frame_t *frame, xlator_t *this,
+                         op_errno = ENOMEM;
+                         goto err;
+                 }
+-                (void) strncpy (local->xsel, node_uuid_key, 256);
++                (void) snprintf(local->xsel, sizeof(local->xsel), "%s", node_uuid_key);
+                 cnt = local->call_cnt = conf->subvolume_cnt;
+                 for (i = 0; i < cnt; i++) {
+                         STACK_WIND_COOKIE (frame, dht_find_local_subvol_cbk,
+@@ -3623,7 +3623,7 @@ dht_getxattr (call_frame_t *frame, xlator_t *this,
+                         op_errno = ENOMEM;
+                         goto err;
+                 }
+-                (void) strncpy (local->xsel, node_uuid_key, 256);
++                (void) snprintf(local->xsel, sizeof(local->xsel), "%s", node_uuid_key);
+                 cnt = local->call_cnt = conf->subvolume_cnt;
+                 for (i = 0; i < cnt; i++) {
+                         STACK_WIND_COOKIE (frame, dht_find_local_subvol_cbk,
+@@ -3651,7 +3651,7 @@ dht_getxattr (call_frame_t *frame, xlator_t *this,
+             (XATTR_IS_PATHINFO (key)
+              || (strcmp (key, GF_XATTR_NODE_UUID_KEY) == 0)
+              || (strcmp (key, GF_XATTR_LIST_NODE_UUIDS_KEY) == 0))) {
+-                (void) strncpy (local->xsel, key, 256);
++                (void) snprintf(local->xsel, sizeof(local->xsel), "%s", key);
+                 cnt = local->call_cnt = layout->cnt;
+                 for (i = 0; i < cnt; i++) {
+                         subvol = layout->list[i].xlator;
+@@ -3666,7 +3666,7 @@ dht_getxattr (call_frame_t *frame, xlator_t *this,
+         if (key && ((strcmp (key, GF_XATTR_NODE_UUID_KEY) == 0)
+                     || XATTR_IS_PATHINFO (key))) {
+                 cached_subvol = local->cached_subvol;
+-                (void) strncpy (local->xsel, key, 256);
++                (void) snprintf(local->xsel, sizeof(local->xsel), "%s", key);
+ 
+                 local->call_cnt = 1;
+                 STACK_WIND_COOKIE (frame, dht_vgetxattr_cbk, cached_subvol,

@@ -1,0 +1,24 @@
+commit f3ae86323668da5e17c2d54866d8dd3f1295f6b7
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Thu May 13 21:27:08 2021 +0300
+
+    patch59
+
+diff --git a/heal/src/glfs-heal.c b/heal/src/glfs-heal.c
+index 9cffc5a..d001395 100644
+--- a/heal/src/glfs-heal.c
++++ b/heal/src/glfs-heal.c
+@@ -417,7 +417,12 @@ glfsh_get_index_dir_loc (loc_t *rootloc, xlator_t *xl, loc_t *dirloc,
+         ret = glfsh_link_inode_update_loc (dirloc, &iattr);
+         if (ret)
+                 goto out;
+-        glfs_loc_touchup (dirloc);
++        
++        ret = glfs_loc_touchup(dirloc);
++        if (ret < 0) {
++                *op_errno = errno;
++                goto out;
++        }
+ 
+         ret = 0;
+ out:

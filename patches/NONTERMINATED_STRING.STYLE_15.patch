@@ -1,0 +1,18 @@
+commit c3a135256d745f7d7fd5ea1a4c4e3e58ec482401
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sun May 30 01:00:02 2021 +0300
+
+    patch128
+
+diff --git a/xlators/cluster/dht/src/switch.c b/xlators/cluster/dht/src/switch.c
+index 9795ff4..e07ee6c 100644
+--- a/xlators/cluster/dht/src/switch.c
++++ b/xlators/cluster/dht/src/switch.c
+@@ -675,6 +675,7 @@ set_switch_pattern (xlator_t *this, dht_conf_t *conf,
+                 }
+                 GF_FREE (dup_str);
+                 memcpy (switch_opt->path_pattern, pattern, strlen (pattern));
++                switch_opt->path_pattern[strlen (pattern)] = '\0';
+                 if (childs) {
+                         dup_childs = gf_strdup (childs);
+                         child = strtok_r (dup_childs, ",", &tmp);

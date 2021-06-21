@@ -1,0 +1,34 @@
+commit 0615ce8b1de7f66e7ae3d4c3839e8c46256c131c
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 22:10:23 2021 +0300
+
+    patch94
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-rpc-ops.c b/xlators/mgmt/glusterd/src/glusterd-rpc-ops.c
+index 8986500..2d4b09d 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-rpc-ops.c
++++ b/xlators/mgmt/glusterd/src/glusterd-rpc-ops.c
+@@ -2323,15 +2323,14 @@ glusterd_brick_op (call_frame_t *frame, xlator_t *this,
+                                 (req_ctx->op, pending_node->node,
+                                  (gd1_mgmt_brick_op_req **)&req,
+                                  req_ctx->dict);
+-
+-                        if (ret) {
+-                                gf_msg (this->name, GF_LOG_ERROR, 0,
+-                                        GD_MSG_BRICK_OP_PAYLOAD_BUILD_FAIL,
+-                                        "Failed to "
+-                                        "build brick op payload during "
+-                                        "'Volume %s'", gd_op_list[req_ctx->op]);
+-                                goto out;
+-                        }
++                }
++                if (ret || !req) {
++                        gf_msg (this->name, GF_LOG_ERROR, 0,
++                                GD_MSG_BRICK_OP_PAYLOAD_BUILD_FAIL,
++                                "Failed to "
++                                "build brick op payload during "
++                                "'Volume %s'", gd_op_list[req_ctx->op]);
++                        goto out;
+                 }
+ 
+                 dummy_frame->local = data;

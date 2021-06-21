@@ -1,0 +1,18 @@
+commit 6e6d6345fd14e6d5a3e442a1a3a08e4fb736dcb3
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 29 22:17:59 2021 +0300
+
+    patch125
+
+diff --git a/xlators/features/gfid-access/src/gfid-access.c b/xlators/features/gfid-access/src/gfid-access.c
+index 7d75b09..f3e2bc9 100644
+--- a/xlators/features/gfid-access/src/gfid-access.c
++++ b/xlators/features/gfid-access/src/gfid-access.c
+@@ -270,6 +270,7 @@ ga_heal_parse_args (xlator_t *this, data_t *data)
+                 goto err;
+ 
+         memcpy (args->bname, blob, len);
++        args->bname[len] = '\0';
+         blob_len -= (len + 1);
+ 
+         if (blob_len)

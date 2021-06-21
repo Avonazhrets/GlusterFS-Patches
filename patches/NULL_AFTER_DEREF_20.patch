@@ -1,0 +1,19 @@
+commit 65027f518d88e113ee29902af9ad16e8c8c57b20
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 22:57:57 2021 +0300
+
+    patch102
+
+diff --git a/xlators/meta/src/meta-helpers.c b/xlators/meta/src/meta-helpers.c
+index 830352e..0fe7299 100644
+--- a/xlators/meta/src/meta-helpers.c
++++ b/xlators/meta/src/meta-helpers.c
+@@ -52,7 +52,7 @@ meta_fd_release (fd_t *fd, xlator_t *this)
+ 	fd_ctx_get (fd, this, &value);
+ 	meta_fd = (void *) value;
+ 
+-	if (meta_fd->dirents) {
++	if (meta_fd && meta_fd->dirents) {
+ 		for (i = 0; i < meta_fd->size; i++)
+ 			GF_FREE ((void *)meta_fd->dirents[i].name);
+ 		GF_FREE (meta_fd->dirents);

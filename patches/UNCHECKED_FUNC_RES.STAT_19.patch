@@ -1,0 +1,25 @@
+commit 9a8721fc59cfc25f7e8cb67ed500ec0cb38c0724
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Fri May 14 16:55:39 2021 +0300
+
+    patch66
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-store.c b/xlators/mgmt/glusterd/src/glusterd-store.c
+index 34b88f5..21ed347 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-store.c
++++ b/xlators/mgmt/glusterd/src/glusterd-store.c
+@@ -393,10 +393,14 @@ glusterd_store_brickinfo_write (int fd, glusterd_brickinfo_t *brickinfo)
+ 
+         snprintf (value, sizeof(value), "%d", brickinfo->port);
+         ret = gf_store_save_value (fd, GLUSTERD_STORE_KEY_BRICK_PORT, value);
++        if (ret)
++                goto out;
+ 
+         snprintf (value, sizeof(value), "%d", brickinfo->rdma_port);
+         ret = gf_store_save_value (fd, GLUSTERD_STORE_KEY_BRICK_RDMA_PORT,
+                                    value);
++        if (ret)
++                goto out;
+ 
+         snprintf (value, sizeof(value), "%d", brickinfo->decommissioned);
+         ret = gf_store_save_value (fd, GLUSTERD_STORE_KEY_BRICK_DECOMMISSIONED,

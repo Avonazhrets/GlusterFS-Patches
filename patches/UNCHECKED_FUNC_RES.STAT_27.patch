@@ -1,0 +1,27 @@
+commit 486769f09217afc40c9ed90b8ecabf4ec075cae9
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 12:55:07 2021 +0300
+
+    patch74
+
+diff --git a/xlators/features/marker/src/marker.c b/xlators/features/marker/src/marker.c
+index d0a0615..35d19ed 100644
+--- a/xlators/features/marker/src/marker.c
++++ b/xlators/features/marker/src/marker.c
+@@ -1446,10 +1446,15 @@ marker_rename_cbk (call_frame_t *frame, void *cookie, xlator_t *this,
+                 }
+ 
+                 local->ia_nlink = 0;
+-                if (xdata)
++                if (xdata) {
+                         ret = dict_get_uint32 (xdata,
+                                                GF_RESPONSE_LINK_COUNT_XDATA,
+                                                &local->ia_nlink);
++                        if (ret) {
++                                local->err = ENOMEM;
++                                goto quota_err;
++                        }
++                }
+ 
+                 local->buf = *buf;
+                 stub = fop_rename_cbk_stub (frame, default_rename_cbk, op_ret,

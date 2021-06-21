@@ -1,0 +1,20 @@
+commit 5dd9eaa632d897d4fa11dfb11a7daff15bb7d431
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 22:06:03 2021 +0300
+
+    patch93
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-handler.c b/xlators/mgmt/glusterd/src/glusterd-handler.c
+index f11bd0f..3aee672 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-handler.c
++++ b/xlators/mgmt/glusterd/src/glusterd-handler.c
+@@ -237,7 +237,8 @@ glusterd_handle_unfriend_req (rpcsvc_request_t *req, uuid_t  uuid,
+                 goto out;
+         }
+ 
+-        event->peername = gf_strdup (hostname);
++        if (hostname)
++                event->peername = gf_strdup (hostname);
+         gf_uuid_copy (event->peerid, uuid);
+ 
+         ctx = GF_CALLOC (1, sizeof (*ctx), gf_gld_mt_friend_req_ctx_t);

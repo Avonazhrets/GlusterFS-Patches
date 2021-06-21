@@ -1,0 +1,22 @@
+commit 17875cd9a7849daa68bba405625c135f88591559
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue Apr 27 22:24:31 2021 +0300
+
+    patch44
+
+diff --git a/xlators/cluster/dht/src/dht-rename.c b/xlators/cluster/dht/src/dht-rename.c
+index 3068499..a195b00 100644
+--- a/xlators/cluster/dht/src/dht-rename.c
++++ b/xlators/cluster/dht/src/dht-rename.c
+@@ -621,9 +621,9 @@ dht_rename_track_for_changelog (xlator_t *this, dict_t *xattr,
+ 
+         info->oldname_len = len1;
+         info->newname_len = len2;
+-        strncpy (info->buffer, oldloc->name, len1);
++        snprintf(info->buffer, len1, "%s", oldloc->name);
+         name = info->buffer + len1;
+-        strncpy (name, newloc->name, len2);
++        snprintf(name, len2, "%s", newloc->name);
+ 
+         ret = dict_set_bin (xattr, DHT_CHANGELOG_RENAME_OP_KEY,
+                             info, size);

@@ -1,0 +1,21 @@
+commit fb36993b49f0a6ec3b21da3d98701848ebfec46f
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Thu May 13 21:19:33 2021 +0300
+
+    patch57
+
+diff --git a/libglusterfs/src/dict.c b/libglusterfs/src/dict.c
+index 243c929..de15196 100644
+--- a/libglusterfs/src/dict.c
++++ b/libglusterfs/src/dict.c
+@@ -2845,7 +2845,9 @@ dict_unserialize (char *orig_buf, int32_t size, dict_t **fill)
+                 value->is_static = 0;
+                 buf += vallen;
+ 
+-                dict_add (*fill, key, value);
++                ret = dict_add (*fill, key, value);
++                if (ret < 0)
++                        goto out;
+         }
+ 
+         ret = 0;

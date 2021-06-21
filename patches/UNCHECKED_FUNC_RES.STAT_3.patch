@@ -1,0 +1,23 @@
+commit 2f5de734623cf4ae933e0a58de399df35103036d
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue May 11 16:12:33 2021 +0300
+
+    patch50
+
+diff --git a/cli/src/cli-rpc-ops.c b/cli/src/cli-rpc-ops.c
+index eb1ca77..e3b9715 100644
+--- a/cli/src/cli-rpc-ops.c
++++ b/cli/src/cli-rpc-ops.c
+@@ -11243,6 +11243,12 @@ gf_cli_snapshot_for_status (call_frame_t *frame, xlator_t *this,
+                  * then it will show snapshot not present. Which will
+                  * not be appropriate.
+                  */
++                if (ret && (cmd != GF_SNAP_STATUS_TYPE_ALL &&
++                            cmd != GF_SNAP_STATUS_TYPE_VOL)) {
++                        gf_log("cli", GF_LOG_ERROR,
++                                "cli_to_glusterd for snapshot status failed");
++                        goto out;
++                }
+                 dict_unref (snap_dict);
+                 snap_dict = NULL;
+         }

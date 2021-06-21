@@ -1,0 +1,30 @@
+commit f2e6b8effebbbe4563c97c490f64004f40a24c69
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue Apr 27 21:52:56 2021 +0300
+
+    patch42
+
+diff --git a/xlators/features/changetimerecorder/src/changetimerecorder.c b/xlators/features/changetimerecorder/src/changetimerecorder.c
+index 99519d1..3e751e7 100644
+--- a/xlators/features/changetimerecorder/src/changetimerecorder.c
++++ b/xlators/features/changetimerecorder/src/changetimerecorder.c
+@@ -129,9 +129,16 @@ ctr_lookup_wind(call_frame_t                    *frame,
+                 /* Copy hard link info*/
+                 gf_uuid_copy (CTR_DB_REC(ctr_local).pargfid,
+                         *((NEW_LINK_CX(ctr_inode_cx))->pargfid));
+-                strncpy (CTR_DB_REC(ctr_local).file_name,
+-                         NEW_LINK_CX(ctr_inode_cx)->basename,
+-                         sizeof(CTR_DB_REC(ctr_local).file_name));
++
++                int file_name_size = sizeof(CTR_DB_REC(ctr_local).file_name);
++                if (strlen(NEW_LINK_CX(ctr_inode_cx)->basename) >= file_name_size) {
++                        gf_msg (this->name, GF_LOG_ERROR, 0,
++                                CTR_MSG_CREATE_CTR_LOCAL_ERROR_WIND,
++                                "WIND: Error while copying file name");
++                        goto out;
++                }
++                snprintf(CTR_DB_REC(ctr_local).file_name, file_name_size,
++                        "%s", NEW_LINK_CX(ctr_inode_cx)->basename);
+ 
+                 /* Since we are in lookup we can ignore errors while
+                  * Inserting in the DB, because there may be many

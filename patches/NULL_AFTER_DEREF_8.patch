@@ -1,0 +1,29 @@
+commit cb9d9395c7f14aa56e952b524fb7e9c55fb664d2
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 21:50:50 2021 +0300
+
+    patch90
+
+diff --git a/xlators/cluster/ec/src/ec-heal.c b/xlators/cluster/ec/src/ec-heal.c
+index 3e9ef8a..046362d 100644
+--- a/xlators/cluster/ec/src/ec-heal.c
++++ b/xlators/cluster/ec/src/ec-heal.c
+@@ -2566,12 +2566,13 @@ none:
+ void
+ ec_heal_fail (ec_t *ec, ec_fop_data_t *fop)
+ {
+-        if (fop->cbks.heal) {
+-            fop->cbks.heal (fop->req_frame, NULL, ec->xl, -1, fop->error, 0, 0,
+-                            0, NULL);
++        if (fop) {
++                if (fop->cbks.heal) {
++                        fop->cbks.heal (fop->req_frame, NULL, ec->xl, -1, 
++                                fop->error, 0, 0, 0, NULL);
++                }
++                ec_fop_data_release (fop);
+         }
+-        if (fop)
+-            ec_fop_data_release (fop);
+ }
+ 
+ void

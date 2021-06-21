@@ -1,0 +1,25 @@
+commit da68f626f6352dcef5eb6f8a8df23d415c7a4c70
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sun Apr 18 21:48:33 2021 +0300
+
+    patch13
+
+diff --git a/xlators/features/marker/src/marker.c b/xlators/features/marker/src/marker.c
+index b51b9cc..d0a0615 100644
+--- a/xlators/features/marker/src/marker.c
++++ b/xlators/features/marker/src/marker.c
+@@ -1351,6 +1351,14 @@ marker_rename_unwind (call_frame_t *frame, void *cookie, xlator_t *this,
+         inode_contribution_t *contri   = NULL;
+ 
+         local = frame->local;
++        if (local == NULL) {
++                gf_log (this->name, GF_LOG_CRITICAL,
++                        "continuation stub to unwind the call is absent, hence "
++                        "call will be hung (call-stack id = %"PRIu64")",
++                        frame->root->unique);
++                return 0;
++        }
++
+         oplocal = local->oplocal;
+         frame->local = NULL;
+ 

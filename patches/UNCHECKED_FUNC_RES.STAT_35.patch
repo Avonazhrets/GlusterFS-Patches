@@ -1,0 +1,21 @@
+commit aa46167e498066c22181f4b93eadde14bb42c685
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 14:14:20 2021 +0300
+
+    patch82
+
+diff --git a/xlators/cluster/dht/src/tier.c b/xlators/cluster/dht/src/tier.c
+index 07730f2..c51753f 100644
+--- a/xlators/cluster/dht/src/tier.c
++++ b/xlators/cluster/dht/src/tier.c
+@@ -2119,7 +2119,9 @@ tier_get_bricklist (xlator_t *xl, struct list_head *local_bricklist_head)
+         GF_VALIDATE_OR_GOTO ("tier", xl, out);
+         GF_VALIDATE_OR_GOTO ("tier", local_bricklist_head, out);
+ 
+-        gethostname (localhost, sizeof (localhost));
++        ret = gethostname (localhost, sizeof (localhost));
++        if (ret)
++                goto out;
+ 
+         /*
+          * This function obtains remote subvolumes and filters out only

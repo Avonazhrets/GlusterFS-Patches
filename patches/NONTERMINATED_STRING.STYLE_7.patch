@@ -1,0 +1,19 @@
+commit 40c6b5dd00f089638b839677cb9f8c8ddfea2200
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Wed May 19 12:23:11 2021 +0300
+
+    patch114
+
+diff --git a/xlators/mgmt/glusterd/src/glusterd-volgen.c b/xlators/mgmt/glusterd/src/glusterd-volgen.c
+index 7f73a6a..bdfc23e 100644
+--- a/xlators/mgmt/glusterd/src/glusterd-volgen.c
++++ b/xlators/mgmt/glusterd/src/glusterd-volgen.c
+@@ -5372,7 +5372,7 @@ glusterd_is_valid_volfpath (char *volname, char *brick)
+                 ret = 0;
+                 goto out;
+         }
+-        strncpy (volinfo->volname, volname, strlen (volname));
++        snprintf(volinfo->volname, sizeof(volinfo->volname), "%s", volname);
+         get_brick_filepath (volfpath, volinfo, brickinfo, NULL);
+ 
+         ret = ((strlen(volfpath) < PATH_MAX) &&

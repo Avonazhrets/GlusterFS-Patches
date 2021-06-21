@@ -1,0 +1,21 @@
+commit 1bc6a32878fb34baa2176bf4833ba1d43042edd4
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Tue May 11 16:49:54 2021 +0300
+
+    patch54
+
+diff --git a/cli/src/cli-rpc-ops.c b/cli/src/cli-rpc-ops.c
+index d02f9e0..605549a 100644
+--- a/cli/src/cli-rpc-ops.c
++++ b/cli/src/cli-rpc-ops.c
+@@ -8247,6 +8247,10 @@ gf_cli_status_cbk (struct rpc_req *req, struct iovec *iov,
+                 if (local && local->dict) {
+                         dict_ref (dict);
+                         ret = dict_set_static_ptr (local->dict, "rsp-dict", dict);
++                        if (ret < 0) {
++                                gf_log ("cli", GF_LOG_ERROR, "failed to set "
++                                      "rsp-dict");
++                        }
+                         ret = 0;
+                 } else {
+                         gf_log ("cli", GF_LOG_ERROR, "local not found");

@@ -1,0 +1,31 @@
+commit 8dc6c1d58fab0691678d29b1b3e57e54b8c56110
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Thu May 13 21:24:12 2021 +0300
+
+    patch58
+
+diff --git a/heal/src/glfs-heal.c b/heal/src/glfs-heal.c
+index 27115f3..9cffc5a 100644
+--- a/heal/src/glfs-heal.c
++++ b/heal/src/glfs-heal.c
+@@ -196,14 +196,18 @@ glfsh_xml_end (int op_ret, char *op_errstr)
+                         "%d", op_errno);
+         XML_RET_CHECK_AND_GOTO (ret, xml_out);
+ 
+-        if (op_errstr)
++        if (op_errstr) {
+                 ret = xmlTextWriterWriteFormatElement (glfsh_writer,
+                                 (xmlChar *)"opErrstr",
+                                 "%s", op_errstr);
+-        else
++                XML_RET_CHECK_AND_GOTO (ret, xml_out);
++        }
++        else {
+                 ret = xmlTextWriterWriteFormatElement (glfsh_writer,
+                                 (xmlChar *)"opErrstr",
+                                 "%s", "");
++                XML_RET_CHECK_AND_GOTO (ret, xml_out);
++        }
+         ret = xmlTextWriterEndDocument (glfsh_writer);
+         XML_RET_CHECK_AND_GOTO (ret, xml_out);
+ 

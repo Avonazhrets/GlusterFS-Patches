@@ -1,0 +1,26 @@
+commit 64033c2169ee878b5b273bfcbee7e219fb86d0c1
+Author: avonazhrets <avonazhrets@gmail.com>
+Date:   Sat May 15 20:46:12 2021 +0300
+
+    patch87
+
+diff --git a/xlators/protocol/client/src/client-helpers.c b/xlators/protocol/client/src/client-helpers.c
+index f9d5c2c..4b2e17c 100644
+--- a/xlators/protocol/client/src/client-helpers.c
++++ b/xlators/protocol/client/src/client-helpers.c
+@@ -339,13 +339,13 @@ client_fd_fop_prepare_local (call_frame_t *frame, fd_t *fd, int64_t remote_fd)
+         clnt_local_t *local = NULL;
+         int          ret    = 0;
+ 
+-        this = frame->this;
+-
+         if (!frame || !fd) {
+                 ret = -EINVAL;
+                 goto out;
+         }
+ 
++        this = frame->this;
++
+         frame->local = mem_get0 (this->local_pool);
+         if (frame->local == NULL) {
+                 ret = -ENOMEM;
